@@ -1,0 +1,39 @@
+
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
+.groupContainer {
+  display: flex;
+}
+
+.groupContainer * {
+  margin: 5px
+}
+
+.cardRoot {
+  background-color: var(--primary-overlay-color);
+  border-radius: 15px;
+  padding : 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cardRoot:hover {
+  cursor: pointer;
+  transform : scale(110%);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.root > div:last-child {
+  display: flex;
+  flex-direction: row;
+}
+
+.root > div:last-child button {
+  margin: 10px;
+  transform: scale(120%);
+}

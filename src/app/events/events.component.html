@@ -1,0 +1,9 @@
+<h1>Upcoming Events</h1>
+
+@for (pair of eventsByDate().entries(); track pair[0]) {
+  <app-eventdate [eventDate]="pair[0]" [events]="pair[1]"/>
+}
+
+<div>
+  <button>Add Event</button>
+</div>

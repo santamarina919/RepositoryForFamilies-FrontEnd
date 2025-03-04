@@ -1,0 +1,27 @@
+<div class="root">
+  <h1>Your Groups</h1>
+  <div class="groupContainer">
+    @if (groupCards == null) {
+      <h2 class="cardRoot">Fetching Group Details...</h2>
+
+    } @else {
+      @for (groupCard of groupCards; track groupCard.id) {
+
+        <div class="cardRoot" [routerLink]="[groupCard.id,]">
+          <h3>{{groupCard.name | titlecase}}</h3>
+          <p>{{groupCard.id | lowercase}}</p>
+          <p><b>{{groupCard.type}}</b></p>
+        </div>
+      } @empty {
+        <h2 class="cardRoot">You have not joined any groups yet</h2>
+      }
+    }
+  </div>
+  <!----TODO make buttons link to each respective page---->
+  <div>
+    <button [routerLink]="['/create/group']">Create</button>
+    <button [routerLink]="['/join/group']">Join</button>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

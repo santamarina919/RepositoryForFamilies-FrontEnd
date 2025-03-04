@@ -1,0 +1,10 @@
+
+
+.rootLayout {
+  display: flex;
+  place-content: center;
+}
+
+input {
+  margin-right: 18px;
+}

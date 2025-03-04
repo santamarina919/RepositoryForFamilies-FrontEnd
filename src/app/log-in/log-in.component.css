@@ -1,0 +1,14 @@
+
+
+.rootLayout {
+  display: flex;
+  place-content: center;
+  padding: 2rem;
+}
+
+.rootLayout div {
+  background-color: rgb(33, 33, 33);
+  border-radius: 25px;
+  padding : 5rem;
+  width: fit-content;
+}

@@ -1,0 +1,8 @@
+<div  class="rootLayout">
+  <form [formGroup]="joinGroupForm" (ngSubmit)="onSubmit()">
+    <h1>Enter the Group Id (its a UUID)</h1>
+    <label>Group Id: </label>
+    <input formControlName="groupId" id="groupId"/>
+    <button type="submit">Submit</button>
+  </form>
+</div>

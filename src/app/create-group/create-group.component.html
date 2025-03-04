@@ -1,0 +1,10 @@
+<div class="rootLayout">
+  <div>
+    <h1>Give your group a name</h1>
+    <form [formGroup]="createGroupForm" (ngSubmit)="onSubmit()">
+      <label for="groupName">Group Name: </label>
+      <input formControlName="groupName" id="groupName"/>
+      <button type="submit">Create</button>
+    </form>
+  </div>
+</div>

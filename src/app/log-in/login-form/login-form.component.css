@@ -1,0 +1,26 @@
+
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+
+form * {
+  margin: var(--children-margin);
+}
+
+form div {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 1fr .25fr;
+}
+
+form div label {
+  text-align: right;
+}
+
+button {
+
+}

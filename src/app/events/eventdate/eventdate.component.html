@@ -1,0 +1,31 @@
+<h2>{{toPreferredDateFormat(DateTime.fromISO(eventDate()))}}</h2>
+<div class="allEventsContainer">
+    @for (event of eventsSortedByTime(); track event.eventId) {
+    <div class="eventContainer">
+      <em> <h4>{{fetchName(event.owner)}}</h4> </em>
+      <div class="eventTitle">
+        <b><h3>{{ event.name }}</h3></b>
+        @if (event.startTime == null && event.endTime == null) {
+          <h4>All Day</h4>
+        } @else {
+          <h4>{{ durationStr(event.startTime, event.endTime) }}</h4>
+        }
+      </div>
+      <div class="eventBody">
+        <p>{{ event.description }}</p>
+      </div>
+
+      <div class="actionBar">
+        @if (event.hasWriteAccess) {
+          <button (click)="onClickPanel()">Attach resource</button>
+          <button>Edit</button>
+          <button>Delete</button>
+        }
+      </div>
+    </div>
+  }
+</div>
+
+<div [class]="showPanel()">
+  <button (click)="onClickPanel()">this panel must be hidden</button>
+</div>

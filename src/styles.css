@@ -1,1 +1,101 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+  --main-background-color: #121212;
+  --main-border-color : white;
+  --opposite-background-color : white;
+  --text-color : white;
+  --opposite-text-color : black;
+
+  --primary-border-width : 2px;
+
+  --children-margin : 3px;
+
+  --character-max-width : 70ch;
+
+  --primary-overlay-color : rgb(33, 33, 33);
+  --secondary-overlay-color : #404246;
+
+  --glance-start-width : 45vh;
+}
+
+body {
+  background-color: var(--main-background-color);
+}
+
+button {
+  background: none;
+  border-style: solid;
+  border-radius: 16rem;
+  border-color: var(--main-border-color);
+  color: var(--text-color);
+  padding : 4px;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
+button:hover {
+  background-color: var(--opposite-background-color);
+  color: var(--opposite-text-color);
+}
+
+h1,h2,h3,h4,h5,h6,p,label {
+  color: var(--text-color);
+}
+
+
+p {
+  max-width: var(--character-max-width);
+}
+
+input {
+  border-radius: 4px;
+  padding: 2px;
+  max-width: 25ch;
+  background-color : var(--secondary-overlay-color);
+  border-color: transparent;
+  outline: none;
+  color: var(--text-color);
+}
+
+input:focus {
+  border-color: var(--main-border-color);
+  border-width: var(--primary-border-width);
+  border-style: solid;
+}
+
+input:hover {
+  border-color: var(--main-border-color);
+  border-width: var(--primary-border-width);
+  border-style: solid;
+  transition: border-color .25s ease-in-out;
+}
+
+input:not(:focus) {
+  border-style: solid;
+  border-color: transparent;
+  border-width: var(--primary-border-width);
+  transition: border-color .35s ease-in-out;
+}
+
+
+.open-sans-googlesansfont {
+  font-family: "Open Sans", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+p,label,h1,h2,h3,h4,h5,h6,input {
+  font-family: "Open Sans", serif;
+}
+
+p,label {
+  font-size: 16px;
+}
+
+input {
+  font-size: 14px;
+}
+

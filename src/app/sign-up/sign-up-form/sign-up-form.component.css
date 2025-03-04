@@ -1,0 +1,35 @@
+.rootLayout {
+  display: flex;
+  place-content: center;
+
+}
+
+.rootLayout * {
+  margin: 3px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr .25fr;
+  grid-template-rows: 1fr;
+}
+
+form > div > label {
+  text-align: right;
+}
+
+button {
+  width: min-content;
+  place-self: center;
+}
+
+
+
+
+
+

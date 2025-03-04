@@ -1,0 +1,51 @@
+.allEventsContainer {
+  display: flex;
+}
+
+
+.eventContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--secondary-overlay-color);
+  margin-left: 200px;
+  width: fit-content;
+  padding : 10px;
+  border-radius: 10px;
+  min-width: 15vw;
+}
+
+.eventContainer > em > h4 {
+  margin-bottom: 0;
+  margin-left: 4px;
+
+}
+
+.eventTitle {
+  margin-top: 0;
+  display: flex;
+}
+
+.eventTitle h3,h4 {
+  margin-right: 10px;
+}
+
+.eventBody {
+  margin-top: -20px;
+}
+
+.hiddenPanel {
+  display: none;
+}
+
+.showPanel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  margin-inline: auto;
+  width: 50%;
+  height: 50%;
+  border-color: whitesmoke;
+  border-style: solid;
+
+}

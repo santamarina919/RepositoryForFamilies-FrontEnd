@@ -1,0 +1,53 @@
+
+
+.eventCardContainer {
+  border-style: solid;
+  border-color: transparent;
+  background-color: var(--primary-overlay-color);
+  border-width: var(--primary-border-width);
+  max-width: var(--glance-start-width);
+  border-radius: 16px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 32px;
+
+}
+
+.eventCardContainer {
+  cursor:  pointer;
+}
+
+
+
+.ownerContainer {
+  font-size: 11pt;
+}
+
+.eventCardContainer div p:not(:first-child) {
+  font-size: 14pt;
+}
+
+
+
+.eventCardContainer div  p:first-child {
+  margin: 0;
+}
+
+.eventCardContainer div  p:nth-child(2) {
+  margin: 0;
+}
+
+.eventCardContainer div  p:last-child {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+
+
+
+.eventCardContainer div {
+  background-color: var(--secondary-overlay-color);
+  padding : 8px;
+  margin-bottom: 16px;
+  border-radius: 16px;
+}

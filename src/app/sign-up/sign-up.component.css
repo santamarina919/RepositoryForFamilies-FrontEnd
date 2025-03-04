@@ -1,0 +1,17 @@
+.rootLayout {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  padding : 2rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  padding : 5rem;
+  background-color: rgb(33, 33, 33);
+  border-radius: 25px;
+}
+
+

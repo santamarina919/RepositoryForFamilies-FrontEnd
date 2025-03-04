@@ -1,0 +1,13 @@
+.rootLayout {
+  display: flex;
+  place-items: center;
+  flex-direction: column;
+}
+
+
+.buttonBar {
+  display: flex;
+  gap: 2rem;
+}
+
+

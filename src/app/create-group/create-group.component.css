@@ -1,0 +1,14 @@
+.rootLayout {
+  display: flex;
+  place-content: center;
+}
+
+.rootLayout div {
+  background-color: var(--primary-overlay-color);
+  padding: 0 20px 20px;
+  border-radius: 16px;
+}
+
+.rootLayout div input {
+  margin-right: 18px;
+}
