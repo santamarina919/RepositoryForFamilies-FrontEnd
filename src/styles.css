@@ -15,6 +15,7 @@
 
   --primary-overlay-color : rgb(33, 33, 33);
   --secondary-overlay-color : #404246;
+  --modal-overlay-color : #909090;
 
   --glance-start-width : 45vh;
 }

@@ -1,22 +1,32 @@
-import {Component, computed, EventEmitter, input, signal} from '@angular/core';
+import {Component, computed, EventEmitter, inject, input, signal, viewChild, WritableSignal} from '@angular/core';
 import {EventDetails, EventPanelDetails} from '../../types/EventDetails';
 import {DateTime} from 'luxon';
-import {first} from 'rxjs';
+import {first, single} from 'rxjs';
 import toPreferredDateFormat from '../../../utils/toPreferredDateFormat';
 import toPreferredTimeFormat from '../../../utils/toPreferredTimeFormat';
 import fetchName from '../../../utils/fetchName';
 import {NgLocaleLocalization} from '@angular/common';
+import {ModalComponent} from '../../../utils/modal/modal.component';
+import {FormControl, FormControlName, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import handleNonBlurClick from '../../../utils/handleNonBlurClick';
+import {ActivatedRoute} from '@angular/router';
+import {ResourceService} from '../../services/resource.service';
+import {Resource} from '../../types/Resource';
 
 @Component({
   selector: 'app-eventdate',
-  imports: [],
+  imports: [ModalComponent, ReactiveFormsModule],
   templateUrl: './eventdate.component.html',
   styleUrl: './eventdate.component.css'
 })
 export class EventdateComponent {
+
+  router = inject(ActivatedRoute)
+
   eventDate = input.required<string>()
 
   events = input.required<EventPanelDetails[]>()
+
 
   eventsSortedByTime = computed<EventPanelDetails[]>(() => {
     return this.events().sort((a,b) => {
@@ -34,14 +44,33 @@ export class EventdateComponent {
     })
   })
 
-  showPanel = signal<string>("hiddenPanel")
+  resourceService = inject(ResourceService)
 
-  onClickPanel = () => {
-    const panelStr = this.showPanel() == "hiddenPanel" ? "showPanel" : "hiddenPanel"
-    this.showPanel.set(panelStr)
-}
+  resources:Resource[] | null = null
+
+  attachModal = signal<boolean>(false)
+
+  invert(signal :WritableSignal<boolean>){
+    this.resourceService.fetchResources(this.router.snapshot.paramMap.get('groupId') ?? 'MISSING GROUP ID')
+      .subscribe(res => {
+        this.resources = res.body ?? []
+      })
+    signal.set(!signal())
+  }
+
+  attachResourceForm = new FormGroup({
+    resourceName : new FormControl(''),
+    reservationStart : new FormControl(''),
+    reservationEnd : new FormControl(''),
+    reservationNotes : new FormControl('')
+  })
+
+
+
+
 
   durationStr(startTime:string | null, endTime :string | null){
+
     if(startTime != null && endTime != null){
       return `${this.getStartTimeStr(startTime)} to ${this.getEndTimeStr(endTime)}`
     }
@@ -67,8 +96,12 @@ export class EventdateComponent {
   }
 
 
+
+
   protected readonly toPreferredDateFormat = toPreferredDateFormat;
   protected readonly DateTime = DateTime;
   protected readonly EventEmitter = EventEmitter;
   protected readonly fetchName = fetchName;
+  protected readonly ModalComponent = ModalComponent;
+  protected readonly handleNonBlurClick = handleNonBlurClick;
 }

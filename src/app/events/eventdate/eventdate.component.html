@@ -17,7 +17,7 @@
 
       <div class="actionBar">
         @if (event.hasWriteAccess) {
-          <button (click)="onClickPanel()">Attach resource</button>
+          <button (click)="invert(attachModal)">Attach resource</button>
           <button>Edit</button>
           <button>Delete</button>
         }
@@ -25,7 +25,38 @@
     </div>
   }
 </div>
+<app-modal [modalState]="attachModal()">
 
-<div [class]="showPanel()">
-  <button (click)="onClickPanel()">this panel must be hidden</button>
-</div>
+      <form [formGroup]="attachResourceForm" class="attachResourceContainer" (click)="handleNonBlurClick($event)">
+        <h1>Attach a resource to your event</h1>
+        <div class="inputContainer">
+
+            <label for="resourceName">Resource: </label>
+            <select formControlName="resourceName" id="resourceName">
+              @if (resources == null) {
+                <option selected disabled>Loading Resources</option>
+              }
+              @else{
+                @for (resource of resources; track resource.resourceId){
+                  <option value="{{resource.resourceId}}">{{resource.name}} ({{fetchName(resource.owner)}})</option>
+                }
+              }
+            </select>
+
+            <label for="reservationStart">Reservation Start: </label>
+            <input formControlName="reservationStart" id="reservationStart"/>
+
+
+            <label for="reservationEnd">Reservation End: </label>
+            <input formControlName="reservationEnd" id="reservationEnd"/>
+
+
+            <label for="reservationNotes">Notes: </label>
+            <input formControlName="reservationNotes" id="reservationNotes"/>
+
+        </div>
+
+        <button>Attach</button>
+
+      </form>
+</app-modal>

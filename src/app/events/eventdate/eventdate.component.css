@@ -33,19 +33,32 @@
   margin-top: -20px;
 }
 
-.hiddenPanel {
-  display: none;
+.attachResourceContainer {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  background-color: var(--modal-overlay-color);
+  padding: 10px;
+  margin-left: 25vw;
+  margin-right: 25vw;
+  margin-top: 25vh;
+  border-radius: 25px;
 }
 
-.showPanel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  margin-inline: auto;
-  width: 50%;
-  height: 50%;
-  border-color: whitesmoke;
-  border-style: solid;
+.inputContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr ;
 
+}
+
+.inputContainer label {
+  text-align: left;
+}
+.inputContainer label,input {
+  margin: 2px;
+}
+
+button {
+  margin: 4px;
 }
