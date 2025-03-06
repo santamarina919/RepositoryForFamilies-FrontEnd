@@ -17,22 +17,22 @@
 
       <div class="actionBar">
         @if (event.hasWriteAccess) {
-          <button (click)="invert(attachModal)">Attach resource</button>
+          <button (click)="handleAttachClick(event.date,event.eventId,attachModalSignal)">Attach resource</button>
           <button>Edit</button>
-          <button>Delete</button>
+          <button (click)="handleDeleteClick(event.eventId)">Delete</button>
         }
       </div>
     </div>
   }
 </div>
-<app-modal [modalState]="attachModal()">
+<app-modal [modalState]="attachModalSignal()">
 
-      <form [formGroup]="attachResourceForm" class="attachResourceContainer" (click)="handleNonBlurClick($event)">
+      <form [formGroup]="attachResourceForm" class="attachResourceContainer" (click)="handleNonBlurClick($event)" (ngSubmit)="handleSubmit()">
         <h1>Attach a resource to your event</h1>
         <div class="inputContainer">
 
-            <label for="resourceName">Resource: </label>
-            <select formControlName="resourceName" id="resourceName">
+            <label for="resourceId">Resource: </label>
+            <select formControlName="resourceId" id="resourceId">
               @if (resources == null) {
                 <option selected disabled>Loading Resources</option>
               }
@@ -43,20 +43,29 @@
               }
             </select>
 
-            <label for="reservationStart">Reservation Start: </label>
-            <input formControlName="reservationStart" id="reservationStart"/>
+            <label for="startTime">Reservation Start: </label>
+            <input formControlName="startTime" id="startTime" type="time"/>
 
 
-            <label for="reservationEnd">Reservation End: </label>
-            <input formControlName="reservationEnd" id="reservationEnd"/>
+            <label for="endTime">Reservation End: </label>
+            <input formControlName="endTime" id="endTime" type="time"/>
 
 
-            <label for="reservationNotes">Notes: </label>
-            <input formControlName="reservationNotes" id="reservationNotes"/>
-
+            <label for="notes">Notes: </label>
+            <input formControlName="notes" id="notes"/>
         </div>
 
-        <button>Attach</button>
+        <button type="submit">Attach</button>
 
       </form>
+</app-modal>
+
+<app-modal [modalState] = "deleteSignal()" >
+  <div class="deleteContainer" (click)="handleNonBlurClick($event)" >
+    <h1>Are you sure?</h1>
+    <div>
+      <button (click)="approveDelete()">Yes</button>
+      <button (click)="cancelDelete()">No</button>
+    </div>
+  </div>
 </app-modal>

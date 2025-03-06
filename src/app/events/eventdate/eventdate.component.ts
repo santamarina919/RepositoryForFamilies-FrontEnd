@@ -1,4 +1,14 @@
-import {Component, computed, EventEmitter, inject, input, signal, viewChild, WritableSignal} from '@angular/core';
+import {
+  Component,
+  computed,
+  EventEmitter,
+  inject,
+  input,
+  resource,
+  signal,
+  viewChild,
+  WritableSignal
+} from '@angular/core';
 import {EventDetails, EventPanelDetails} from '../../types/EventDetails';
 import {DateTime} from 'luxon';
 import {first, single} from 'rxjs';
@@ -12,6 +22,11 @@ import handleNonBlurClick from '../../../utils/handleNonBlurClick';
 import {ActivatedRoute} from '@angular/router';
 import {ResourceService} from '../../services/resource.service';
 import {Resource} from '../../types/Resource';
+import {group} from '@angular/animations';
+import {EventManager} from '@angular/platform-browser';
+import {EventsService} from '../../services/events.service';
+import {HttpStatusCode} from '@angular/common/http';
+
 
 @Component({
   selector: 'app-eventdate',
@@ -23,10 +38,13 @@ export class EventdateComponent {
 
   router = inject(ActivatedRoute)
 
+  resourceService = inject(ResourceService)
+
+  eventService = inject(EventsService)
+
   eventDate = input.required<string>()
 
   events = input.required<EventPanelDetails[]>()
-
 
   eventsSortedByTime = computed<EventPanelDetails[]>(() => {
     return this.events().sort((a,b) => {
@@ -44,11 +62,21 @@ export class EventdateComponent {
     })
   })
 
-  resourceService = inject(ResourceService)
 
   resources:Resource[] | null = null
 
-  attachModal = signal<boolean>(false)
+  attachModalSignal = signal<boolean>(false)
+
+  contextDate = 'NOT A DATE'
+
+  eventContext = 'NOT AN ID'
+
+  handleAttachClick(date :string, event :string,signal :WritableSignal<boolean>){
+
+    this.contextDate = date
+    this.eventContext = event
+    this.invert(signal)
+  }
 
   invert(signal :WritableSignal<boolean>){
     this.resourceService.fetchResources(this.router.snapshot.paramMap.get('groupId') ?? 'MISSING GROUP ID')
@@ -59,14 +87,49 @@ export class EventdateComponent {
   }
 
   attachResourceForm = new FormGroup({
-    resourceName : new FormControl(''),
-    reservationStart : new FormControl(''),
-    reservationEnd : new FormControl(''),
-    reservationNotes : new FormControl('')
+    resourceId : new FormControl(''),
+    startTime : new FormControl(''),
+    endTime : new FormControl(''),
+    notes : new FormControl(''),
   })
 
+  handleSubmit(){
+    const groupId = this.router.snapshot.paramMap.get('groupId') ?? 'MISSING GROUP ID'
+    const formData = this.attachResourceForm.value
+    this.resourceService.createReservation(groupId,this.eventContext,this.contextDate,formData)
+      .subscribe(res => {
+        console.warn(res)
+      })
+  }
 
+  eventIdContext = 'Not an id'
 
+  deleteSignal = signal(false)
+
+  handleDeleteClick(eventId :string){
+    this.eventIdContext = eventId
+    this.invert(this.deleteSignal)
+  }
+
+  approveDelete(){
+    const groupId = this.router.snapshot.paramMap.get('groupId') ?? 'MISSING GROUP ID'
+    this.eventService.deleteEvent(groupId,this.eventIdContext)
+      .then(res => {
+        res.subscribe(response => {
+          if(response.status == HttpStatusCode.Ok){
+            this.invert(this.deleteSignal)
+          }
+          else{
+            //panic
+          }
+        })
+      })
+  }
+
+  cancelDelete() {
+    console.warn(this.deleteSignal())
+    this.invert(this.deleteSignal)
+  }
 
 
   durationStr(startTime:string | null, endTime :string | null){
@@ -104,4 +167,5 @@ export class EventdateComponent {
   protected readonly fetchName = fetchName;
   protected readonly ModalComponent = ModalComponent;
   protected readonly handleNonBlurClick = handleNonBlurClick;
+  protected readonly EventManager = EventManager;
 }

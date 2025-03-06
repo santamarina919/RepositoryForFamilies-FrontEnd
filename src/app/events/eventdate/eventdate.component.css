@@ -62,3 +62,14 @@
 button {
   margin: 4px;
 }
+
+.deleteContainer {
+  background-color: var(--modal-overlay-color);
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  border-radius: 10px;
+  margin-left: 25vw;
+  margin-right: 25vw;
+  margin-top: 25vh;
+}

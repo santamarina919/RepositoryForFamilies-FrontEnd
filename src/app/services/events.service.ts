@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BASE_URL} from '../server.consts';
 import {ActivatedRoute, Router} from '@angular/router';
 import {routes} from '../root/app.routes';
@@ -12,6 +12,8 @@ import {EventDetails, EventPanelDetails} from '../types/EventDetails';
 export class EventsService {
 
   static EVENTS_ENDPOINT = '/events/api/member/allevents?'
+
+  static DELETE_EVENT_ENDPOINT = '/events/api/member/deleteevent?'
 
   http = inject(HttpClient)
 
@@ -27,6 +29,18 @@ export class EventsService {
 
       }
     )
+  }
+
+  async deleteEvent(groupId :string, eventId :string){
+    return this.http.post(
+      BASE_URL + EventsService.DELETE_EVENT_ENDPOINT + new HttpParams().set('groupId',groupId),
+      JSON.stringify({eventId : eventId}),
+      {
+        headers : new HttpHeaders().set('Content-Type','application/json'),
+        withCredentials : true,
+        observe : 'response'
+      }
+      )
   }
 
 }
