@@ -1,7 +1,7 @@
 import {
   Component,
   computed,
-  EventEmitter,
+  EventEmitter, HostListener,
   inject,
   input,
   resource,
@@ -27,7 +27,7 @@ import {EventManager} from '@angular/platform-browser';
 import {EventsService} from '../../services/events.service';
 import {HttpStatusCode} from '@angular/common/http';
 
-
+//TODO implement edit function
 @Component({
   selector: 'app-eventdate',
   imports: [ModalComponent, ReactiveFormsModule],
@@ -65,7 +65,21 @@ export class EventdateComponent {
 
   resources:Resource[] | null = null
 
+
+
   attachModalSignal = signal<boolean>(false)
+
+  deleteSignal = signal(false)
+
+  activeSignal :WritableSignal<boolean> | null = null
+
+  @HostListener('document:keyup.esc',[])
+  handleEsc(){
+    if(this.activeSignal != null) {
+      this.invert(this.activeSignal)
+      this.activeSignal = null
+    }
+  }
 
   contextDate = 'NOT A DATE'
 
@@ -76,6 +90,7 @@ export class EventdateComponent {
     this.contextDate = date
     this.eventContext = event
     this.invert(signal)
+    this.activeSignal = signal
   }
 
   invert(signal :WritableSignal<boolean>){
@@ -104,11 +119,11 @@ export class EventdateComponent {
 
   eventIdContext = 'Not an id'
 
-  deleteSignal = signal(false)
 
   handleDeleteClick(eventId :string){
     this.eventIdContext = eventId
     this.invert(this.deleteSignal)
+    this.activeSignal = this.deleteSignal
   }
 
   approveDelete(){
@@ -127,7 +142,6 @@ export class EventdateComponent {
   }
 
   cancelDelete() {
-    console.warn(this.deleteSignal())
     this.invert(this.deleteSignal)
   }
 

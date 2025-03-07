@@ -1,4 +1,4 @@
-import {Component, effect, input, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, effect, HostListener, input, OnInit, signal, WritableSignal} from '@angular/core';
 
 @Component({
   selector: 'app-modal',
