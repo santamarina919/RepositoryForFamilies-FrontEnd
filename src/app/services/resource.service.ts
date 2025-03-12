@@ -4,13 +4,16 @@ import {BASE_URL} from '../server.consts';
 import {ActivatedRoute} from '@angular/router';
 import {Resource} from '../types/Resource';
 import {AttachResourceForm} from '../types/AttachResourceForm';
+import {Availability} from '../types/Availability';
 
 
 @Injectable({providedIn : 'root'})
 export class ResourceService {
   private ALL_RESOURCES_ENDPOINT = '/resources/api/member/all?'
 
-  private CREATE_RESERVATION_ENDPOINT = "/resources/api/member/reserve?"
+  private CREATE_RESERVATION_ENDPOINT = '/resources/api/member/reserve?'
+
+  private AVAILABILITY_ENDPOINT = '/resources/api/member/availability?'
 
   private http = inject(HttpClient)
 
@@ -38,6 +41,14 @@ export class ResourceService {
       )
   }
 
-
+  async fetchAvailability(groupId :string,n :number){
+    return this.http.get<Availability>(
+      BASE_URL + this.AVAILABILITY_ENDPOINT + new HttpParams().set('groupId',groupId).set('n',n),
+      {
+        withCredentials : true,
+        observe : 'response'
+      }
+    )
+  }
 
 }

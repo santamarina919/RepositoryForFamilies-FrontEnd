@@ -6,11 +6,15 @@ import {GroupGlance} from '../../types/GroupGlance';
 import {EventCardComponent} from './event-card/event-card.component';
 import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
 import {catchError} from 'rxjs';
+import {ResourcesCardComponent} from './resources-card/resources-card.component';
+import {ResourceService} from '../../services/resource.service';
+import {Availability} from '../../types/Availability';
 
 @Component({
   selector: 'app-group-home',
   imports: [
-    EventCardComponent
+    EventCardComponent,
+    ResourcesCardComponent
   ],
   templateUrl: './group-glance.component.html',
   styleUrl: './group-glance.component.css'
@@ -21,7 +25,11 @@ export class GroupGlanceComponent implements OnInit{
 
   protected groupService = inject(GroupsService)
 
+  protected resourceService = inject(ResourceService)
+
   protected glanceData:GroupGlance | null = null;
+
+  protected resourceBlocks: Availability | null = null
 
   protected unauthorized = false
 
@@ -29,9 +37,6 @@ export class GroupGlanceComponent implements OnInit{
     const groupId= this.route.snapshot.paramMap.get('groupId') ?? 'MISSING_GROUP_ID'
     this.groupService.fetchGlance(groupId)
       .then(observable => {
-
-
-
         observable.subscribe({
 
           next : (res) => {
@@ -53,9 +58,15 @@ export class GroupGlanceComponent implements OnInit{
 
 
         })
+      })
 
-
-
+    this.resourceService.fetchAvailability(groupId,3)
+      .then(promise => {
+        promise.subscribe({
+          next : value => {
+            this.resourceBlocks = value.body
+          }
+        })
       })
 
   }

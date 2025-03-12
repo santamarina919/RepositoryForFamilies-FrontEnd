@@ -1,0 +1,19 @@
+<div class="resourcesCardContainer">
+  @if (blocks() == null) {
+    <p>Fetching availability</p>
+  } @else {
+    <h3>Resources</h3>
+      @for (key of Object.keys(blocks()!); track key) {
+        <div class="resourceCard">
+          <p> {{ key }} </p>
+          <p [class]="determineBlockClass(blocks()![key])">{{ availBlockStr(blocks()![key]) }}</p>
+        </div>
+
+      } @empty {
+        <div class="resourceCard">
+          <p>There are no shared resources in this group</p>
+        </div>
+      }
+
+  }
+</div>

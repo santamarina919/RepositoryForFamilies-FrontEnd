@@ -8,5 +8,7 @@
     <h2>{{glanceData.groupDetails.name}} ({{glanceData.groupDetails.id}})</h2>
     <div class="cardContainer">
       <app-event-card [events]="glanceData.eventGlances.slice(0,3)"></app-event-card>
+      <app-resources-card [blocks]="resourceBlocks"></app-resources-card>
     </div>
   }
+

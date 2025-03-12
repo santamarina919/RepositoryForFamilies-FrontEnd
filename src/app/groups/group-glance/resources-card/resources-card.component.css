@@ -1,0 +1,29 @@
+.resourcesCardContainer {
+  border-style: solid;
+  border-color: transparent;
+  background-color: var(--primary-overlay-color);
+  border-width: var(--primary-border-width);
+  max-width: var(--glance-start-width);
+  border-radius: 16px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 32px;
+
+}
+
+.resourceCard {
+  background-color: var(--secondary-overlay-color);
+  border-radius: 10px;
+  margin: 10px;
+  padding : 5px;
+}
+.resourceCard p {
+  display: inline;
+}
+
+.avail {
+  color: green;
+}
+.unavail {
+  color: red;
+}
