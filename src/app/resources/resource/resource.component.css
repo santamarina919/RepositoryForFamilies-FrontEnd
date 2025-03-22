@@ -1,0 +1,30 @@
+.resource {
+  background-color: var(--primary-overlay-color);
+  padding : 8px;
+  border-radius: 25px;
+
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 25px;
+}
+
+.reserveModal {
+  background-color: var(--modal-overlay-color);
+  display: flex;
+  place-content: center;
+  margin-top: 25vh;
+  margin-left: 25vh;
+  margin-right: 25vh;
+  padding: 40px;
+  border-radius: 25px;
+}
+
+.reserveModal > form > div {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr;
+}
+
+.reserveModal > form > select {
+  display: block;
+}

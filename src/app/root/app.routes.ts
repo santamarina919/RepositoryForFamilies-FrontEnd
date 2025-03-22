@@ -7,6 +7,7 @@ import {GroupGlanceComponent} from '../groups/group-glance/group-glance.componen
 import {CreateGroupComponent} from '../create-group/create-group.component';
 import {JoinGroupComponent} from '../join-group/join-group.component';
 import {EventsComponent} from '../events/events.component';
+import {ResourcesComponent} from '../resources/resources.component';
 
 export const routes: Routes = [
   {path : '',component : HomeComponent},
@@ -16,6 +17,7 @@ export const routes: Routes = [
   {path : 'groups/:groupId',component : GroupGlanceComponent},
   {path : 'create/group', component : CreateGroupComponent},
   {path : 'groups/:groupId/events', component : EventsComponent},
+  {path : 'groups/:groupId/resources', component : ResourcesComponent},
   {path : 'join/group', component : JoinGroupComponent},
 
 ];

@@ -1,0 +1,26 @@
+
+.reservation {
+  background-color: var(--secondary-overlay-color);
+  padding: 6px;
+  border-radius: 25px;
+}
+
+
+
+
+.rejectionModal {
+  display: flex;
+  place-content: center;
+  background-color: var(--primary-overlay-color);
+  margin-top: 25vh;
+  margin-right: 25vw;
+  margin-left: 25vw;
+  padding: 5rem;
+  border-style: solid;
+  border-color: whitesmoke;
+  border-radius: 25px;
+}
+
+.rejectionModal > form > * {
+  margin-bottom: 5px;
+}

@@ -1,0 +1,54 @@
+<div class="resource">
+  <button (click)="ModalComponent.invertModalSignal(reserveSignal)">Reserve</button>
+  <p>{{ resource().name }} owned by {{ fetchName(resource().owner) }}</p>
+
+  @if (resource().description != null) {
+    <p>Description: {{ resource().description }}</p>
+  }
+
+  @if (reservations().length != 0) {
+    <h3>Reservations</h3>
+  }
+  @for (reservation of reservations(); track reservation.reservationId) {
+    <app-reservation [resource]="resource()" [reservation]="reservation"></app-reservation>
+  }
+</div>
+
+<app-modal [modalState]="reserveSignal()">
+  <div class='reserveModal' (click)="ModalComponent.invertModalSignal(reserveSignal)">
+    <form>
+      <h1>Reserve {{fetchName(resource().owner)}}'s {{resource().name}}</h1>
+      <label>Use an existing event?</label>
+      <select>
+        <option>Some event id</option>
+      </select>
+      <p>or</p>
+      <p>Enter a value for each field</p>
+      <div>
+        <div>
+          <label>Date</label>
+          <input type="date"/>
+        </div>
+
+        <div>
+          <label>Start Time</label>
+          <input type="time"/>
+        </div>
+
+        <div>
+          <label>End Time</label>
+          <input type="time"/>
+        </div>
+
+        <div>
+          <label>Notes</label>
+          <input type="text"/>
+        </div>
+      </div>
+
+      <button>Reserve</button>
+      <button (click)="ModalComponent.invertModalSignal(reserveSignal)">Cancel</button>
+    </form>
+  </div>
+</app-modal>
+

@@ -6,7 +6,7 @@
     "RepositoryForFamilies-Ang": {
       "projectType": "application",
       "schematics": {},
-      "root": "",
+      "root": ".",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {

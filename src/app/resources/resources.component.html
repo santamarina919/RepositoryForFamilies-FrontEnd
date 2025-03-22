@@ -1,0 +1,13 @@
+<h1>Resources</h1>
+@if (resources == null) {
+  <p>Fetching resources</p>
+}
+@else {
+  @for (pair of resources; track $index){
+    <app-resource [resource]="pair.resource" [reservations]="pair.reservations"> </app-resource>
+  }
+}
+
+
+
+

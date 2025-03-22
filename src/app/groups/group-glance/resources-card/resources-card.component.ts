@@ -4,10 +4,13 @@ import {Availability, AvailableBlock} from '../../../types/Availability';
 import {DateTime} from 'luxon';
 import toPreferredDateFormat from '../../../../utils/toPreferredDateFormat';
 import toPreferredTimeFormat, {INVALID_TIME} from '../../../../utils/toPreferredTimeFormat';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-resources-card',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './resources-card.component.html',
   styleUrl: './resources-card.component.css'
 })
@@ -35,11 +38,11 @@ export class ResourcesCardComponent {
       return startDate + toPreferredTimeFormat(block.start) + toPreferredTimeFormat(block.end)
     }
 
-    var startTimeStr = toPreferredTimeFormat(block.start)
+    let startTimeStr = toPreferredTimeFormat(block.start);
     if(startTimeStr == INVALID_TIME){
       startTimeStr = ''
     }
-    var endTimeStr = toPreferredTimeFormat(block.end)
+    let endTimeStr = toPreferredTimeFormat(block.end);
     if(endTimeStr == INVALID_TIME){
       endTimeStr = ''
     }
@@ -47,7 +50,7 @@ export class ResourcesCardComponent {
   }
 
   determineBlockClass(block :AvailableBlock | null) {
-    if(block != null &&  this.availBlockStr(block) == 'Unavailable'){
+    if(block == null ||  this.availBlockStr(block) == 'Unavailable'){
       return 'unavail'
     }
     return 'avail'

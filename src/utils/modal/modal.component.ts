@@ -9,6 +9,14 @@ import {Component, effect, HostListener, input, OnInit, signal, WritableSignal} 
 })
 export class ModalComponent{
 
+  static invertModalSignal(sig :WritableSignal<boolean>){
+    sig.set(!sig());
+  }
+
+  static handleModalContentClick(event :Event) {
+    event.stopPropagation();
+  }
+
   //true indicates shown false hidden
   modalState = input.required<boolean>()
 

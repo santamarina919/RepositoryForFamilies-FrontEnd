@@ -1,0 +1,9 @@
+
+
+.reservations {
+  background-color: var(--secondary-overlay-color);
+  padding: 6px;
+  border-radius: 25px;
+}
+
+
