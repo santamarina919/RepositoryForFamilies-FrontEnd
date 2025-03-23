@@ -16,5 +16,7 @@ I've used Next.js and plain html,css and js to build applications so I chose ang
 * ## Users
 User can sign up and log in using two simple forms.
 The sign-up form asks for email,password, first name and last name.
-![Demo showing how someone signs up for the application](https://github.com/santamarina919/RepositoryForFamilies-FrontEnd/blob/main/readmegifs/RFFSignUpDemo-ReadMeVGif.gif)
+
+
+<br>
 The login form asks for a username and password.
