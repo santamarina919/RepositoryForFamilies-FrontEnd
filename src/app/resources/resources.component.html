@@ -3,8 +3,8 @@
   <p>Fetching resources</p>
 }
 @else {
-  @for (pair of resources; track $index){
-    <app-resource [resource]="pair.resource" [reservations]="pair.reservations"> </app-resource>
+  @for (resource of resources; track $index){
+    <app-resource [resource]="resource"> </app-resource>
   }
 }
 

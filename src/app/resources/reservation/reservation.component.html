@@ -1,45 +1,14 @@
 <div class="reservation">
-  @if (reservation().writeAccess && !reservation().approved) {
-    <p>Approve or reject {{ fetchName(reservation().reservationOwner.email) }}'s reservation?</p>
-    <button
-      (click)="resourceService.approveReservation(route.snapshot.paramMap.get('groupId')! ,reservation().reservationId,resource().resourceId)">
-      Approve
-    </button>
-    <button (click)="handleReject(reservation().reservationId,resource().resourceId)">Reject</button>
-  }
 
   <p>
     {{ toPreferredDateFormatStr(reservation().date) }} -
-    {{ toPreferredTimeFormat(reservation().startTime) }} to {{ toPreferredTimeFormat(reservation().endTime) }}
-  </p>
+    {{ createTimeDescription(reservation().startTime,reservation().endTime) }}
 
-  @if (reservation().linkedEvent != null) {
-    <p>Linked to "{{ reservation().linkedEvent.name }}"</p>
-  }
+  <p>Linked to "{{ reservation().name }}"</p>
 
-  <p>Notes: {{ reservation().notes }}</p>
-  @if (reservation().approved) {
-    <p>Approved</p>
-  } @else if (reservation().rejectionNote.length == 0) {
-    <p>Not approved by owner yet</p>
-  } @else {
-    <p>Rejected</p>
-    <p>Rejection Note: {{ reservation().rejectionNote }}</p>
-  }
+
+  <p>Description: {{ reservation().description }}</p>
+
 
 </div>
-
-<app-modal [modalState]="rejectModal()">
-  <div class="rejectionModal" (click)="onModalClick($event)">
-    <form >
-      <h1>Reject Reservation</h1>
-      <div>
-        <label>Leave a note explaining why it was rejected (optional): </label>
-        <input/>
-      </div>
-      <button type="submit">Reject Reservation</button>
-      <button>Cancel Action</button>
-    </form>
-  </div>
-</app-modal>
 

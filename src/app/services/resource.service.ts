@@ -1,13 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BASE_URL} from '../server.consts';
-import {ActivatedRoute} from '@angular/router';
 import {Resource} from '../types/Resource';
 import {AttachResourceForm} from '../types/AttachResourceForm';
 import {ResourceGlanceData} from '../types/ResourceGlanceData';
-import {group} from '@angular/animations';
-import {ResourceEvent} from '../types/ResourceEvent';
-
 
 @Injectable({providedIn : 'root'})
 export class ResourceService {
@@ -59,7 +55,7 @@ export class ResourceService {
   }
 
   async fetchAllResources(groupId :string){
-    return this.http.get<ResourceEvent[]>(
+    return this.http.get<Resource[]>(
       BASE_URL + this.ALL_RESOURCES_ENDPOINT + new HttpParams().set('groupId', groupId),
       {
         withCredentials : true,

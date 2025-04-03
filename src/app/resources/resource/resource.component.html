@@ -6,11 +6,11 @@
     <p>Description: {{ resource().description }}</p>
   }
 
-  @if (reservations().length != 0) {
+  @if (resource().reservations.length != 0) {
     <h3>Reservations</h3>
   }
-  @for (reservation of reservations(); track reservation.reservationId) {
-    <app-reservation [resource]="resource()" [reservation]="reservation"></app-reservation>
+  @for (reservation of resource().reservations; track reservation.eventId) {
+    <app-reservation [reservation]="reservation"></app-reservation>
   }
 </div>
 

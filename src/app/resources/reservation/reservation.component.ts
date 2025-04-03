@@ -2,11 +2,11 @@ import {Component, inject, input, Input, signal} from '@angular/core';
 import {ResourceService} from "../../services/resource.service";
 import {ActivatedRoute} from "@angular/router";
 import {ModalComponent} from '../../../utils/modal/modal.component';
-import {Reservation} from '../../types/ResourceEvent';
 import fetchName from '../../../utils/fetchName';
 import {toPreferredDateFormatStr} from '../../../utils/toPreferredDateFormat';
 import toPreferredTimeFormat from '../../../utils/toPreferredTimeFormat';
 import {Resource} from '../../types/Resource';
+import {EventDetails} from '../../types/EventDetails';
 
 @Component({
   selector: 'app-reservation',
@@ -18,8 +18,7 @@ import {Resource} from '../../types/Resource';
 })
 export class ReservationComponent {
 
-  reservation = input.required<Reservation>();
-  resource = input.required<Resource>()
+  reservation = input.required<EventDetails>()
   resourceService = inject(ResourceService);
   route = inject(ActivatedRoute)
 
@@ -37,7 +36,16 @@ export class ReservationComponent {
   }
 
 
+  createTimeDescription(startTime: string | null, endTime: string | null) {
+    if(startTime == null || endTime == null){
+      return 'All Day'
+    }
+    return toPreferredTimeFormat(startTime) + ' to ' + toPreferredTimeFormat(endTime)
+  }
+
   protected readonly fetchName = fetchName;
   protected readonly toPreferredDateFormatStr = toPreferredDateFormatStr;
   protected readonly toPreferredTimeFormat = toPreferredTimeFormat;
+
+
 }

@@ -1,13 +1,9 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {ResourceService} from '../services/resource.service';
 import {ActivatedRoute} from '@angular/router';
-import {ResourceEvent} from '../types/ResourceEvent';
-import fetchName from '../../utils/fetchName';
-import toPreferredDateFormat, {toPreferredDateFormatStr} from '../../utils/toPreferredDateFormat';
-import toPreferredTimeFormat from '../../utils/toPreferredTimeFormat';
-import {ReservationComponent} from './reservation/reservation.component';
 import {ModalComponent} from '../../utils/modal/modal.component';
 import {ResourceComponent} from './resource/resource.component';
+import {Resource} from '../types/Resource';
 
 @Component({
   selector: 'app-resources',
@@ -24,7 +20,7 @@ export class ResourcesComponent implements OnInit{
 
   route = inject(ActivatedRoute)
 
-  resources :ResourceEvent[] | null= null
+  resources :Resource[] | null= null
 
   reserveSignal = signal(false)
 
@@ -38,9 +34,5 @@ export class ResourcesComponent implements OnInit{
       })
   }
 
-  protected readonly fetchName = fetchName;
-  protected readonly toPreferredDateFormat = toPreferredDateFormat;
-  protected readonly toPreferredDateFormatStr = toPreferredDateFormatStr;
-  protected readonly toPreferredTimeFormat = toPreferredTimeFormat;
   protected readonly ModalComponent = ModalComponent;
 }
