@@ -1,6 +1,6 @@
 import {Component, computed, inject, input} from '@angular/core';
 import {ResourceService} from '../../../services/resource.service';
-import {Availability, AvailableBlock} from '../../../types/Availability';
+import {ResourceGlanceData} from '../../../types/ResourceGlanceData';
 import {DateTime} from 'luxon';
 import toPreferredDateFormat from '../../../../utils/toPreferredDateFormat';
 import toPreferredTimeFormat, {INVALID_TIME} from '../../../../utils/toPreferredTimeFormat';
@@ -15,45 +15,25 @@ import {RouterLink} from '@angular/router';
   styleUrl: './resources-card.component.css'
 })
 export class ResourcesCardComponent {
-  blocks = input.required<Availability | null>()
+  resources = input.required<ResourceGlanceData[] | null>()
 
-  hasOpenAvailability(block :AvailableBlock){
-    return '-999999999-01-01T00:00:00' == block.start && '+999999999-12-31T23:59:00' == block.end
-  }
-
-  availBlockStr(block :AvailableBlock | null){
-    if(block == null){
-      return 'Unavailable'
+  statusChangeStr(dateTimeStr :string | null)
+  {
+    if(dateTimeStr == null){
+      return 'foreseeable future'
     }
-    if(this.hasOpenAvailability(block)){
-      return 'Available'
-    }
-    const startTime = DateTime.fromISO(block.start)
-    const endTime = DateTime.fromISO(block.end)
+    const time = DateTime.fromISO(dateTimeStr)
 
-    const startDate = toPreferredDateFormat(startTime)
-    const endDate = toPreferredDateFormat(endTime)
-
-    if(startDate == endDate){
-      return startDate + toPreferredTimeFormat(block.start) + toPreferredTimeFormat(block.end)
+    const units = ['minutes','hours']
+    for(var unitStr of units){
+      const unit = unitStr as 'minutes' | 'hours' | 'days'
+      const diff = time.diffNow(unit)
+      if(diff[unit] < 10){
+        return  Math.trunc(diff[unit]) + ' ' + unit + ' from now'
+      }
     }
 
-    let startTimeStr = toPreferredTimeFormat(block.start);
-    if(startTimeStr == INVALID_TIME){
-      startTimeStr = ''
-    }
-    let endTimeStr = toPreferredTimeFormat(block.end);
-    if(endTimeStr == INVALID_TIME){
-      endTimeStr = ''
-    }
-    return `Available ${startDate} ${startTimeStr} to ${endDate} ${endTimeStr}`
-  }
-
-  determineBlockClass(block :AvailableBlock | null) {
-    if(block == null ||  this.availBlockStr(block) == 'Unavailable'){
-      return 'unavail'
-    }
-    return 'avail'
+    return Math.trunc(time.diffNow('days').days) + ' days from now'
   }
 
   protected readonly Object = Object;

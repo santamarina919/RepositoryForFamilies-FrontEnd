@@ -8,7 +8,9 @@ import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
 import {catchError} from 'rxjs';
 import {ResourcesCardComponent} from './resources-card/resources-card.component';
 import {ResourceService} from '../../services/resource.service';
-import {Availability} from '../../types/Availability';
+import {ResourceGlanceData} from '../../types/ResourceGlanceData';
+import {EventsService} from '../../services/events.service';
+import {EventDetails} from '../../types/EventDetails';
 
 @Component({
   selector: 'app-group-home',
@@ -27,14 +29,20 @@ export class GroupGlanceComponent implements OnInit{
 
   protected resourceService = inject(ResourceService)
 
+  protected eventService = inject(EventsService)
+
   protected glanceData:GroupGlance | null = null;
 
-  protected resourceBlocks: Availability | null = null
+  protected eventGlances : EventDetails[] | null = null;
+
+  protected resources: ResourceGlanceData[] | null = null
 
   protected unauthorized = false
 
   ngOnInit() {
     const groupId= this.route.snapshot.paramMap.get('groupId') ?? 'MISSING_GROUP_ID'
+
+
     this.groupService.fetchGlance(groupId)
       .then(observable => {
         observable.subscribe({
@@ -60,14 +68,28 @@ export class GroupGlanceComponent implements OnInit{
         })
       })
 
-    this.resourceService.fetchAvailability(groupId,3)
+
+    this.eventService.fetchEventGlance(groupId)
       .then(promise => {
-        promise.subscribe({
-          next : value => {
-            this.resourceBlocks = value.body
+        promise.subscribe((response) => {
+          if(response.status == HttpStatusCode.Ok){
+            this.eventGlances = response.body
           }
         })
       })
+
+      this.resourceService.glanceResources(groupId)
+        .then(promise => {
+          promise.subscribe({
+            error : (err :HttpErrorResponse) => {
+              console.log(err.status)
+            },
+
+            next  : (response ) => {
+              this.resources = response.body
+            }
+          })
+        })
 
   }
 

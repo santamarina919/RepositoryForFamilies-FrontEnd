@@ -20,7 +20,7 @@ export class GroupsService {
 
   }
 
-  async fetchGroups()  {
+  async fetchGroupDetails()  {
     return this.http.get<GroupCardDetails[]>(
       BASE_URL + GroupsService.ALL_GROUPS_ENDPOINT,
       {

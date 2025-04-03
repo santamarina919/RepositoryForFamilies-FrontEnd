@@ -1,18 +1,23 @@
 
+@if (events() == null){
+  <div class="eventCardContainer">
+    <p>Fetching events</p>
+  </div>
+} @else {
+  <div class="eventCardContainer" [routerLink]="['events']">
+    <h3>Events</h3>
+    @for (event of events(); track event.eventId){
+      <div>
+        <em><p class="ownerContainer">{{fetchName(event.owner)}}</p></em>
+        <b>
+          <p>{{ event.name }}</p>
+          <p>{{ eventCardContentStr(event) }}</p>
+        </b>
 
-<div class="eventCardContainer" [routerLink]="['events']">
-  <h3>Events</h3>
-  @for (event of events(); track event.eventId){
-    <div>
-      <em><p class="ownerContainer">{{fetchName(event.owner)}}</p></em>
-      <b>
-        <p>{{ event.name }}</p>
-        <p>{{ eventCardContentStr(event) }}</p>
-      </b>
-
-    </div>
-  }
-  @empty  {
-    <p>No events planned for group</p>
-  }
-</div>
+      </div>
+    }
+    @empty  {
+      <p>No events planned for group</p>
+    }
+  </div>
+}

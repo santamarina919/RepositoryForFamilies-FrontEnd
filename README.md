@@ -20,3 +20,14 @@ The sign-up form asks for email,password, first name and last name.
 
 <br>
 The login form asks for a username and password.
+
+* ## Groups
+
+Users can join any number of groups. After they sign into the application they are presented with a list of groups 
+that they are a part of. The user chooses which group they want to view currently. The user can also chose to create a new group or
+join one. If they chose to create a group they only need to provide a name. If they chose to join a group then they 
+must know what they group id is and provide it. 
+
+* ## Events 
+
+Events are presented to the user as a list seperated by the date on which they are going to occur. 

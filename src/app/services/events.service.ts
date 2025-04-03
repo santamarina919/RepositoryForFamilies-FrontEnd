@@ -4,6 +4,7 @@ import {BASE_URL} from '../server.consts';
 import {ActivatedRoute, Router} from '@angular/router';
 import {routes} from '../root/app.routes';
 import {EventDetails, EventPanelDetails} from '../types/EventDetails';
+import {group} from '@angular/animations';
 
 
 @Injectable({
@@ -15,8 +16,20 @@ export class EventsService {
 
   static DELETE_EVENT_ENDPOINT = '/events/api/member/deleteevent?'
 
+  static EVENT_GLANCE_ENDPOINT = '/events/api/member/glance?'
+
   http = inject(HttpClient)
 
+  async fetchEventGlance(groupId :string){
+    return this.http.get<EventDetails[]>(
+      BASE_URL + EventsService.EVENT_GLANCE_ENDPOINT,
+      {
+        params : new HttpParams().set('groupId',groupId),
+        withCredentials : true,
+        observe : 'response'
+      }
+    );
+  }
 
 
   async fetchEvents(groupId :string) {

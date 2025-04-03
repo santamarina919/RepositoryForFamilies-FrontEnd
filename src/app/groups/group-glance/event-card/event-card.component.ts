@@ -18,7 +18,7 @@ import fetchName from '../../../../utils/fetchName';
   styleUrl: './event-card.component.css'
 })
 export class EventCardComponent  {
-  events = input.required<EventDetails[]>()
+  events = input.required<EventDetails[] | null>()
 
   eventCardContentStr(eventDetails :EventDetails){
     const date = DateTime.fromISO(eventDetails.date)

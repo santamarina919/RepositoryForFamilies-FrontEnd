@@ -25,7 +25,7 @@ export class GroupsComponent implements OnInit{
   protected unauthorized = false;
 
   ngOnInit() {
-    this.groupsService.fetchGroups().then(returnObj => {
+    this.groupsService.fetchGroupDetails().then(returnObj => {
       returnObj.subscribe(result => {
 
         this.groupCards = result.body

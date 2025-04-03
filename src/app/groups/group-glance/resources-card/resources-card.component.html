@@ -1,12 +1,11 @@
 <div class="resourcesCardContainer" [routerLink]="['resources']">
-  @if (blocks() == null) {
+  @if (resources() == null) {
     <p>Fetching availability</p>
   } @else {
     <h3>Resources</h3>
-      @for (key of Object.keys(blocks()!); track key) {
+      @for (resource of resources(); track resource.resourceId) {
         <div class="resourceCard">
-          <p> {{ key }} </p>
-          <p [class]="determineBlockClass(blocks()![key])">{{ availBlockStr(blocks()![key]) }}</p>
+          <p> {{resource.name}} - {{resource.availability}} until {{statusChangeStr(resource.statusChange)}}</p>
         </div>
 
       } @empty {

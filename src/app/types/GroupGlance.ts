@@ -4,6 +4,5 @@ import {GroupDetails} from './GroupDetails';
 
 export type GroupGlance = {
   users :UserDetails[]
-  eventGlances :EventDetails[]
   groupDetails :GroupDetails
 }

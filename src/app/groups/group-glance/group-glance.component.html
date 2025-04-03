@@ -7,8 +7,8 @@
   @else {
     <h2>{{glanceData.groupDetails.name}} ({{glanceData.groupDetails.id}})</h2>
     <div class="cardContainer">
-      <app-event-card [events]="glanceData.eventGlances.slice(0,3)"></app-event-card>
-      <app-resources-card [blocks]="resourceBlocks"></app-resources-card>
+      <app-event-card [events]="eventGlances"></app-event-card>
+      <app-resources-card [resources]="resources"></app-resources-card>
     </div>
   }
 

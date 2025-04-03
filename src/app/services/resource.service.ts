@@ -4,24 +4,35 @@ import {BASE_URL} from '../server.consts';
 import {ActivatedRoute} from '@angular/router';
 import {Resource} from '../types/Resource';
 import {AttachResourceForm} from '../types/AttachResourceForm';
-import {Availability} from '../types/Availability';
+import {ResourceGlanceData} from '../types/ResourceGlanceData';
 import {group} from '@angular/animations';
 import {ResourceEvent} from '../types/ResourceEvent';
 
 
 @Injectable({providedIn : 'root'})
 export class ResourceService {
+
+  private GLANCE_RESOURCES_ENDPOINT = '/resources/api/member/glance?'
+
   private ALL_RESOURCES_ENDPOINT = '/resources/api/member/all?'
 
   private CREATE_RESERVATION_ENDPOINT = '/resources/api/member/reserve?'
-
-  private AVAILABILITY_ENDPOINT = '/resources/api/member/availability?'
 
   private APPROVE_ENDPOINT = '/resources/api/member/approvereservation?'
 
   private REJECTION_ENDPOINT  = "/resources/api/member/rejectreservation?";
 
   private http = inject(HttpClient)
+
+  async glanceResources(groupId :string){
+    return this.http.get<ResourceGlanceData[]>(
+      BASE_URL + this.GLANCE_RESOURCES_ENDPOINT + new HttpParams().set('groupId',groupId),
+      {
+        withCredentials : true,
+        observe : 'response'
+      }
+    )
+  }
 
   fetchResources(groupId :string){
     return this.http.get<Resource[]>(
@@ -45,16 +56,6 @@ export class ResourceService {
         observe : 'response'
       }
       )
-  }
-
-  async fetchAvailability(groupId :string,n :number){
-    return this.http.get<Availability>(
-      BASE_URL + this.AVAILABILITY_ENDPOINT + new HttpParams().set('groupId',groupId).set('n',n),
-      {
-        withCredentials : true,
-        observe : 'response'
-      }
-    )
   }
 
   async fetchAllResources(groupId :string){
