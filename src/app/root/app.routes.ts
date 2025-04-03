@@ -4,7 +4,7 @@ import {LogInComponent} from '../log-in/log-in.component';
 import {SignUpComponent} from '../sign-up/sign-up.component';
 import {GroupsComponent} from '../groups/groups.component';
 import {GroupGlanceComponent} from '../groups/group-glance/group-glance.component';
-import {CreateGroupComponent} from '../create-group/create-group.component';
+import {CreateGroupComponent} from '../pages/create-group/create-group.component';
 import {JoinGroupComponent} from '../join-group/join-group.component';
 import {EventsComponent} from '../events/events.component';
 import {ResourcesComponent} from '../resources/resources.component';

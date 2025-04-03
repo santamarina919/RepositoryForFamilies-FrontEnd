@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {GroupsService} from '../services/groups.service';
+import {GroupsService} from '../../services/groups.service';
 import {Router} from '@angular/router';
 
 @Component({
