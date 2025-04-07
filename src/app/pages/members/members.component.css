@@ -2,3 +2,10 @@
   display: flex;
   place-content: center;
 }
+
+.memberList {
+  background-color: var(--primary-overlay-color);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
