@@ -1,0 +1,13 @@
+
+<div class="manageUsersCard" (click)="onClick()">
+  <h3>Manage Users</h3>
+  <div>
+    @if (waitingApproval == null){
+      <p>Fetching Users Waiting Approval</p>
+    } @else {
+      <div class="manageUsersOverlay">
+        <p>{{waitingApproval}}(s) users waiting approval</p>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,4 @@
+.membersContainer {
+  display: flex;
+  place-content: center;
+}

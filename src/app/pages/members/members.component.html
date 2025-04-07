@@ -1,0 +1,82 @@
+<div class="membersContainer">
+  <div>
+    @if (members() == null) {
+    <h1>Loading all members</h1>
+  } @else {
+
+    <h3>Unauthorized users</h3>
+      @if (!hasUnauthorizedPresent()) {
+        <p>This group does not have any users waiting authorization</p>
+      } @else {
+        <table>
+
+          <th>Email</th>
+          <th>Name</th>
+          <th>Type</th>
+
+          @for (member of members(); track member.userId) {
+            @if (member.memberType == 'UNAUTHORIZED') {
+              <tr>
+                <td>{{ member.userId }}</td>
+                <td>{{ fetchName(member.userId) }}</td>
+                <td>{{ member.memberType }}</td>
+                <td><button (click)="onApproveClick(member.userId)">Approve</button></td>
+                <td><button (click)="onRejectClick(member.userId)">Reject</button></td>
+
+              </tr>
+            }
+          }
+        </table>
+      }
+
+    <h3>Authorized users</h3>
+
+      @if (!citizenPresent()) {
+        <p>This group has no authorized members</p>
+      } @else {
+        <table>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Type</th>
+          @for (member of members(); track member.userId) {
+            @if (member.memberType == 'CITIZEN') {
+              <tr>
+
+                <td>{{ member.userId }}</td>
+                <td>{{ fetchName(member.userId) }}</td>
+                <td>{{ member.memberType }}</td>
+                <td>
+                  <button (click)="onAdminClick(member.userId)">Make Admin</button>
+                </td>
+                <td>
+                  <button (click)="onRemoveClick(member.userId) ">Remove</button>
+                </td>
+
+              </tr>
+            }
+          }
+        </table>
+      }
+
+
+    <h3>Admins</h3>
+
+    <table>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Type</th>
+      @for (member of members(); track member.userId) {
+        @if (member.memberType == 'ADMIN') {
+          <tr>
+            <td>{{ member.userId }}</td>
+            <td>{{ fetchName(member.userId) }}</td>
+            <td>{{ member.memberType }}</td>
+          </tr>
+        }
+      }
+    </table>
+
+
+  }
+  </div>
+</div>

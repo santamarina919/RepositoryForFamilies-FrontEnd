@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpStatusCode} from '@angular/common/http';
-import {BASE_URL} from '../server.consts';
-import {SignUpComponent} from '../sign-up/sign-up.component';
+import {BASE_URL} from '../../utils/server.consts';
+import {SignUpComponent} from '../pages/sign-up/sign-up.component';
 import {Router} from '@angular/router';
 import {LogInForm} from '../types/LogInForm';
 
@@ -11,6 +11,7 @@ export class UserService {
   static SIGNUP_ENDPOINT = '/auth/api/signup'
 
   static LOGIN_ENDPOINT = '/auth/api/login'
+
 
   private router = inject(Router)
 

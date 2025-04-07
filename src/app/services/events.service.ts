@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {BASE_URL} from '../server.consts';
+import {BASE_URL} from '../../utils/server.consts';
 import {ActivatedRoute, Router} from '@angular/router';
 import {routes} from '../root/app.routes';
 import {EventDetails, EventPanelDetails} from '../types/EventDetails';

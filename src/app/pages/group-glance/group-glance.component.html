@@ -1,0 +1,17 @@
+  @if (unauthorized) {
+    <h2>Wait until a admin approves your join request</h2>
+  }
+  @else if (glanceData == null) {
+    <h1>Loading Data</h1>
+  }
+  @else {
+    <h2>{{glanceData.groupDetails.name}} ({{glanceData.groupDetails.id}})</h2>
+    <div class="cardContainer">
+      <app-event-card [events]="eventGlances"></app-event-card>
+      <app-resources-card [resources]="resources"></app-resources-card>
+      @if (userType == 'ADMIN'){
+        <app-users-card></app-users-card>
+      }
+    </div>
+  }
+

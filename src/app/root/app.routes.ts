@@ -1,13 +1,15 @@
 import { Routes } from '@angular/router';
-import {HomeComponent} from '../home/home.component';
-import {LogInComponent} from '../log-in/log-in.component';
-import {SignUpComponent} from '../sign-up/sign-up.component';
-import {GroupsComponent} from '../groups/groups.component';
-import {GroupGlanceComponent} from '../groups/group-glance/group-glance.component';
+import {HomeComponent} from '../pages/home/home.component';
+import {LogInComponent} from '../pages/log-in/log-in.component';
+import {SignUpComponent} from '../pages/sign-up/sign-up.component';
+import {GroupsComponent} from '../pages/groups/groups.component';
 import {CreateGroupComponent} from '../pages/create-group/create-group.component';
-import {JoinGroupComponent} from '../join-group/join-group.component';
-import {EventsComponent} from '../events/events.component';
-import {ResourcesComponent} from '../resources/resources.component';
+import {EventsComponent} from '../pages/events/events.component';
+import {ResourcesComponent} from '../pages/resources/resources.component';
+import {JoinGroupComponent} from '../pages/join-group/join-group.component';
+import {GroupGlanceComponent} from '../pages/group-glance/group-glance.component';
+import {MembersComponent} from '../pages/members/members.component';
+
 
 export const routes: Routes = [
   {path : '',component : HomeComponent},
@@ -19,5 +21,6 @@ export const routes: Routes = [
   {path : 'groups/:groupId/events', component : EventsComponent},
   {path : 'groups/:groupId/resources', component : ResourcesComponent},
   {path : 'join/group', component : JoinGroupComponent},
+  {path : 'groups/:groupId/members', component : MembersComponent}
 
 ];

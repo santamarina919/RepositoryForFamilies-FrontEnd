@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {BASE_URL} from '../server.consts';
+import {BASE_URL} from '../../utils/server.consts';
 import {Resource} from '../types/Resource';
 import {AttachResourceForm} from '../types/AttachResourceForm';
 import {ResourceGlanceData} from '../types/ResourceGlanceData';

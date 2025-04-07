@@ -1,0 +1,19 @@
+.manageUsersCard {
+  border-style: solid;
+  border-color: transparent;
+  background-color: var(--primary-overlay-color);
+  padding: 15px;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+}
+
+.manageUsersOverlay {
+  border-style: solid;
+  border-color: transparent;
+  background-color: var(--secondary-overlay-color);
+  padding: 5px;
+  border-radius: 10px;
+}
+
