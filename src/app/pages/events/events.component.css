@@ -1,0 +1,28 @@
+.addEventModal {
+  background-color: var(--modal-overlay-color);
+  margin: 25rem auto auto;
+  width: fit-content;
+  padding : 10px;
+  border-radius: 25px;
+}
+
+
+
+.addEventForm div {
+  display: grid;
+  grid-template-columns: 1fr 1fr .25fr;
+  grid-template-rows: auto;
+  margin-bottom: 3px;
+}
+.addEventForm div label {
+  text-align: right;
+}
+
+.addEventForm div button:first-child {
+  place-self: end;
+  width: inherit;
+}
+.addEventForm div button:last-child {
+  place-self: start;
+  width: auto;
+}

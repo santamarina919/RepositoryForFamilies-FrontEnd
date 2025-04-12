@@ -24,10 +24,6 @@ export class ReservationComponent {
   rejectModal = signal(false)
 
 
-  onModalClick(event :Event){
-    event.stopPropagation()
-  }
-
 
   handleReject(reservationId :string, resourceId :string) {
     this.rejectModal.set(!this.rejectModal())

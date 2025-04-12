@@ -4,6 +4,7 @@ import {BASE_URL} from '../../utils/server.consts';
 import {SignUpComponent} from '../pages/sign-up/sign-up.component';
 import {Router} from '@angular/router';
 import {LogInForm} from '../types/LogInForm';
+import {saveSelfId} from '../../utils/fetchSelfId';
 
 
 @Injectable({providedIn : 'root'})
@@ -52,6 +53,7 @@ export class UserService {
     )
       .subscribe(response => {
         if(response.status == HttpStatusCode.Ok){
+          saveSelfId(formData.email as string)
           this.router.navigate(['groups'])
         }
       })

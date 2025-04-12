@@ -1,5 +1,5 @@
 import {Component, input, signal} from '@angular/core';
-import {ModalComponent} from '../modal/modal.component';
+import {ModalComponent, ModalState} from '../modal/modal.component';
 import {Resource} from '../../types/Resource';
 import fetchName from '../../../utils/fetchName';
 import {ReservationComponent} from '../reservation/reservation.component';
@@ -17,7 +17,7 @@ export class ResourceComponent {
 
   resource = input.required<Resource>()
 
-  reserveSignal = signal(false)
+  reserveSignal = signal<ModalState>('hidden')
 
 
   protected readonly ModalComponent = ModalComponent;

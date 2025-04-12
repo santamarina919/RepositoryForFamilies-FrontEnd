@@ -3,20 +3,19 @@ import {
   computed,
   EventEmitter, HostListener,
   inject,
-  input,
+  input, model,
   resource,
   signal,
   viewChild,
   WritableSignal
 } from '@angular/core';
-import {EventDetails, EventPanelDetails} from '../../types/EventDetails';
 import {DateTime} from 'luxon';
 import {first, single} from 'rxjs';
 import toPreferredDateFormat from '../../../utils/toPreferredDateFormat';
 import toPreferredTimeFormat from '../../../utils/toPreferredTimeFormat';
 import fetchName from '../../../utils/fetchName';
 import {NgLocaleLocalization} from '@angular/common';
-import {ModalComponent} from '../modal/modal.component';
+import {ModalComponent, ModalState} from '../modal/modal.component';
 import {FormControl, FormControlName, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import handleNonBlurClick from '../../../utils/handleNonBlurClick';
 import {ActivatedRoute} from '@angular/router';
@@ -25,7 +24,8 @@ import {Resource} from '../../types/Resource';
 import {group} from '@angular/animations';
 import {EventManager} from '@angular/platform-browser';
 import {EventsService} from '../../services/events.service';
-import {HttpStatusCode} from '@angular/common/http';
+import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
+import {EventPanelDetails} from '../../types/EventPanelDetails';
 
 //TODO implement edit function
 @Component({
@@ -41,6 +41,8 @@ export class EventdateComponent {
   resourceService = inject(ResourceService)
 
   eventService = inject(EventsService)
+
+  unsortedEvents = model.required<EventPanelDetails[]>()
 
   eventDate = input.required<string>()
 
@@ -67,53 +69,61 @@ export class EventdateComponent {
 
 
 
-  attachModalSignal = signal<boolean>(false)
+  attachModalSignal = signal<ModalState>('hidden')
 
-  deleteSignal = signal(false)
+  deleteSignal = signal<ModalState>('hidden')
 
-  activeSignal :WritableSignal<boolean> | null = null
 
-  @HostListener('document:keyup.esc',[])
-  handleEsc(){
-    if(this.activeSignal != null) {
-      this.invert(this.activeSignal)
-      this.activeSignal = null
-    }
-  }
+  eventContext = 'When the attach button is clicked this variable will be set to the corresponding events id'
 
-  contextDate = 'NOT A DATE'
-
-  eventContext = 'NOT AN ID'
-
-  handleAttachClick(date :string, event :string,signal :WritableSignal<boolean>){
-
-    this.contextDate = date
+  handleAttachClick(date :string, event :string,signal :WritableSignal<ModalState>){
     this.eventContext = event
-    this.invert(signal)
-    this.activeSignal = signal
-  }
-
-  invert(signal :WritableSignal<boolean>){
     this.resourceService.fetchResources(this.router.snapshot.paramMap.get('groupId') ?? 'MISSING GROUP ID')
       .subscribe(res => {
         this.resources = res.body ?? []
       })
-    signal.set(!signal())
+    this.attachModalSignal.set('shown')
   }
 
   attachResourceForm = new FormGroup({
     resourceId : new FormControl(''),
-    startTime : new FormControl(''),
-    endTime : new FormControl(''),
-    notes : new FormControl(''),
   })
 
-  handleSubmit(){
+  handleAttachResourceSubmit(){
     const groupId = this.router.snapshot.paramMap.get('groupId') ?? 'MISSING GROUP ID'
-    const formData = this.attachResourceForm.value
-    this.resourceService.createReservation(groupId,this.eventContext,this.contextDate,formData)
-      .subscribe(res => {
-        console.warn(res)
+    this.resourceService.createReservation(groupId,this.eventContext,this.attachResourceForm.value.resourceId ?? 'Form Value Retrieval Failed in submit')
+      .then(promise => {
+        promise.subscribe({
+          error : (response :HttpErrorResponse) => {
+
+          },
+
+          next : (response) => {
+            if(response.status == HttpStatusCode.Ok){
+              this.unsortedEvents.set(
+                this.unsortedEvents().map(event => {
+                  if(event.eventId != this.eventContext) {return event}
+
+
+                  if(response.body == null){
+                    throw Error ('could not retrieve reserved resource details')
+                  }
+                  return {
+                    ...event,
+                    reservedResources : [
+                      response.body.resourceDetails,
+                      ...event.reservedResources
+                    ]
+                  }
+
+                })
+              )
+
+
+              this.attachModalSignal.set('hidden')
+            }
+          }
+        })
       })
   }
 
@@ -122,8 +132,7 @@ export class EventdateComponent {
 
   handleDeleteClick(eventId :string){
     this.eventIdContext = eventId
-    this.invert(this.deleteSignal)
-    this.activeSignal = this.deleteSignal
+    this.deleteSignal.set('shown')
   }
 
   approveDelete(){
@@ -132,7 +141,7 @@ export class EventdateComponent {
       .then(res => {
         res.subscribe(response => {
           if(response.status == HttpStatusCode.Ok){
-            this.invert(this.deleteSignal)
+            this.deleteSignal.set('hidden')
           }
           else{
             //panic
@@ -142,7 +151,7 @@ export class EventdateComponent {
   }
 
   cancelDelete() {
-    this.invert(this.deleteSignal)
+    this.deleteSignal.set('hidden')
   }
 
 
@@ -172,7 +181,17 @@ export class EventdateComponent {
     return `${toPreferredTimeFormat(endTimeStr)}`
   }
 
-
+  reservationStatusStr(approved: null | boolean) {
+    if(approved == null){
+      return 'Owner has not explicitly approved or rejected this reservation'
+    }
+    if(approved){
+      return 'Owner has approved this reservation'
+    }
+    else{
+      return 'Owner has denied this reservation'
+    }
+  }
 
 
   protected readonly toPreferredDateFormat = toPreferredDateFormat;
@@ -182,4 +201,6 @@ export class EventdateComponent {
   protected readonly ModalComponent = ModalComponent;
   protected readonly handleNonBlurClick = handleNonBlurClick;
   protected readonly EventManager = EventManager;
+
+
 }

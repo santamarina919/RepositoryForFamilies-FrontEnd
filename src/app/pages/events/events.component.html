@@ -1,9 +1,50 @@
 <h1>Upcoming Events</h1>
 
 @for (pair of eventsByDate().entries(); track pair[0]) {
-  <app-eventdate [eventDate]="pair[0]" [events]="pair[1]"/>
+  <app-eventdate [(unsortedEvents)]="events" [eventDate]="pair[0]" [events]="pair[1]"/>
 }
 
 <div>
-  <button>Add Event</button>
+  <button (click)="addEventModal.set('shown')">Add Event</button>
 </div>
+
+<app-modal [(modalState)]="addEventModal" >
+
+  <div class="addEventModal" (click)="handleNonBlurClick($event)">
+    <form class="addEventForm" [formGroup]="addEventForm" (ngSubmit)="onSubmit()">
+      <h3>Add an event to your group</h3>
+
+      <div>
+        <label>Name</label>
+        <input formControlName="eventName" type="text"/>
+      </div>
+
+      <div>
+        <label>Date</label>
+        <input formControlName="eventDate" type="date"/>
+      </div>
+
+      <div>
+        <label>Start Time</label>
+        <input formControlName="startTime" type="time"/>
+      </div>
+
+      <div>
+        <label>End Time</label>
+        <input formControlName="endTime" type="time"/>
+      </div>
+
+      <div>
+        <label>Description</label>
+        <input formControlName="description" type="text"/>
+      </div>
+
+      <div>
+        <button >Add</button>
+        <button (click)="addEventModal.set('hidden')">Cancel</button>
+
+      </div>
+    </form>
+  </div>
+
+</app-modal>

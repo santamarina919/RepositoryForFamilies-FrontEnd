@@ -3,8 +3,11 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BASE_URL} from '../../utils/server.consts';
 import {ActivatedRoute, Router} from '@angular/router';
 import {routes} from '../root/app.routes';
-import {EventDetails, EventPanelDetails} from '../types/EventDetails';
+import {EventDetails} from '../types/EventDetails';
 import {group} from '@angular/animations';
+import {EventPanelDetails} from '../types/EventPanelDetails';
+import {FormControl, ɵFormGroupValue, ɵTypedOrUntyped} from '@angular/forms';
+import {DateTime} from 'luxon';
 
 
 @Injectable({
@@ -18,10 +21,12 @@ export class EventsService {
 
   static EVENT_GLANCE_ENDPOINT = '/events/api/member/glance?'
 
+  static POST_EVENT_ENDPOINT = '/events/api/member/postevent?'
+
   http = inject(HttpClient)
 
   async fetchEventGlance(groupId :string){
-    return this.http.get<EventDetails[]>(
+    return this.http.get<EventPanelDetails[]>(
       BASE_URL + EventsService.EVENT_GLANCE_ENDPOINT,
       {
         params : new HttpParams().set('groupId',groupId),
@@ -54,6 +59,19 @@ export class EventsService {
         observe : 'response'
       }
       )
+  }
+
+  async createEvent(groupId: string, value: any){
+    return this.http.post(
+      BASE_URL + EventsService.POST_EVENT_ENDPOINT,
+      value,
+      {
+        withCredentials : true,
+        headers : new HttpHeaders().set('Content-Type','application/json'),
+        params : new HttpParams().set('groupId',groupId),
+        observe : 'response'
+      }
+    )
   }
 
 }

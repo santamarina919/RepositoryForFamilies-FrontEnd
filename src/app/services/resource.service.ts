@@ -4,6 +4,8 @@ import {BASE_URL} from '../../utils/server.consts';
 import {Resource} from '../types/Resource';
 import {AttachResourceForm} from '../types/AttachResourceForm';
 import {ResourceGlanceData} from '../types/ResourceGlanceData';
+import {ResourceDetails} from '../types/ResourceDetails';
+import {ReservationResponse} from '../types/ReservationResponse';
 
 @Injectable({providedIn : 'root'})
 export class ResourceService {
@@ -40,16 +42,15 @@ export class ResourceService {
     )
   }
 
-  createReservation(groupId :string,eventId :string | null,date :string,form :AttachResourceForm){
-    const formz = {...form,date : date, linkedEvent : eventId}
+  async createReservation(groupId :string,linkedEvent :string,resourceId :string){
 
-    return this.http.post(
-      BASE_URL + this.CREATE_RESERVATION_ENDPOINT + new HttpParams().set('groupId',groupId),
-      JSON.stringify(formz),
+    return this.http.post<ReservationResponse>(
+      BASE_URL + this.CREATE_RESERVATION_ENDPOINT,
+      null,
       {
-        headers : new HttpHeaders().set('Content-Type','application/json'),
         withCredentials : true,
-        observe : 'response'
+        observe : 'response',
+        params : new HttpParams().set('groupId',groupId).set('linkedEvent',linkedEvent).set('resourceId',resourceId)
       }
       )
   }

@@ -1,44 +1,24 @@
-import {Component, effect, HostListener, input, OnInit, signal, WritableSignal} from '@angular/core';
+import {
+  Component, effect, HostListener, input, model, OnChanges, OnInit, signal, SimpleChanges,
+  WritableSignal
+} from '@angular/core';
+
+export type ModalState = 'hidden' | 'shown'
 
 @Component({
   selector: 'app-modal',
   imports: [],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.css',
-  standalone:true
+  standalone: true
 })
-export class ModalComponent{
+export class ModalComponent {
 
-  static invertModalSignal(sig :WritableSignal<boolean>){
-    sig.set(!sig());
+  static handleContentClick(event :Event){
+    event.stopPropagation()
   }
 
-  static handleModalContentClick(event :Event) {
-    event.stopPropagation();
-  }
-
-  //true indicates shown false hidden
-  modalState = input.required<boolean>()
-
-  modalStyle:'hidden' | 'shown' = 'hidden'
-
-  showState = true
-
-  constructor() {
-    effect(() => {
-      this.modalStyle = this.modalState() == this.showState? 'shown' : 'hidden'
-    });
-  }
-
-  hide(){
-    this.modalStyle = 'hidden'
-    this.invertShowState()
-  }
-
-  invertShowState(){
-    this.showState = !this.showState;
-  }
-
+  modalState = model<ModalState>('hidden')
 
 
 

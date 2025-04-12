@@ -2,6 +2,6 @@
 
 
 
-<div [class]="modalStyle" (click)="hide()">
+<div [class]="modalState()" (click)="modalState.set('hidden')">
     <ng-content></ng-content>
 </div>
