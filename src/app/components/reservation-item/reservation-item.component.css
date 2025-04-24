@@ -24,3 +24,6 @@
 .rejectionModal > form > * {
   margin-bottom: 5px;
 }
+.rejectionModal > * {
+  margin : 15px;
+}

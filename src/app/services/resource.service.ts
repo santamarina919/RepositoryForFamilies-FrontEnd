@@ -6,6 +6,8 @@ import {AttachResourceForm} from '../types/AttachResourceForm';
 import {ResourceGlanceData} from '../types/ResourceGlanceData';
 import {ResourceDetails} from '../types/ResourceDetails';
 import {ReservationResponse} from '../types/ReservationResponse';
+import {Reservations} from '../types/Reservations';
+import {group} from '@angular/animations';
 
 @Injectable({providedIn : 'root'})
 export class ResourceService {
@@ -13,6 +15,8 @@ export class ResourceService {
   private GLANCE_RESOURCES_ENDPOINT = '/resources/api/member/glance?'
 
   private ALL_RESOURCES_ENDPOINT = '/resources/api/member/all?'
+
+  private ALL_RESERVATIONS_ENDPOINT = '/reservations/api/member/all'
 
   private CREATE_RESERVATION_ENDPOINT = '/resources/api/member/reserve?'
 
@@ -32,7 +36,7 @@ export class ResourceService {
     )
   }
 
-  fetchResources(groupId :string){
+  async fetchResources(groupId :string){
     return this.http.get<Resource[]>(
       BASE_URL + this.ALL_RESOURCES_ENDPOINT + new HttpParams().set('groupId',groupId),
       {
@@ -42,8 +46,20 @@ export class ResourceService {
     )
   }
 
-  async createReservation(groupId :string,linkedEvent :string,resourceId :string){
+  async fetchReservations(groupId :string){
+    return this.http.get<Reservations[]>(
+      BASE_URL + this.ALL_RESERVATIONS_ENDPOINT,
+      {
+        withCredentials : true,
+        observe : 'response',
+        params : new HttpParams().set('groupId',groupId)
+      }
+    )
+  }
 
+
+
+  async createReservation(groupId :string,linkedEvent :string,resourceId :string){
     return this.http.post<ReservationResponse>(
       BASE_URL + this.CREATE_RESERVATION_ENDPOINT,
       null,
@@ -52,7 +68,7 @@ export class ResourceService {
         observe : 'response',
         params : new HttpParams().set('groupId',groupId).set('linkedEvent',linkedEvent).set('resourceId',resourceId)
       }
-      )
+    )
   }
 
   async fetchAllResources(groupId :string){
@@ -65,10 +81,10 @@ export class ResourceService {
     )
   }
 
-  async approveReservation(groupId :string,reservationId:string,resourceId :string){
+  async approveReservation(groupId :string,resourceId:string,eventId :string){
     this.http.post(
       BASE_URL + this.APPROVE_ENDPOINT,
-      JSON.stringify({reservationId : reservationId, resourceId : resourceId}),
+      JSON.stringify({resourceId : resourceId, eventId : eventId}),
       {
         withCredentials : true,
         params : new HttpParams().set('groupId',groupId),
@@ -81,15 +97,16 @@ export class ResourceService {
   }
 
 
-  async rejectReservation(groupId :string, reservationId :string,resourceId :string){
-    this.http.post(
+  async rejectReservation(groupId :string, resourceId :string, eventId :string){
+    return this.http.post(
       BASE_URL + this.REJECTION_ENDPOINT,
-      JSON.stringify({reservationId,resourceId}),
+      JSON.stringify({resourceId: resourceId, eventId : eventId}),
       {
         withCredentials : true,
         headers : new HttpHeaders().set('Content-Type','application/json'),
-        params : new HttpParams().set('groupId',groupId)
-      }
+        params : new HttpParams().set('groupId',groupId),
+        observe : 'response'
+      },
     )
   }
 

@@ -5,7 +5,7 @@ import {SignUpComponent} from '../pages/sign-up/sign-up.component';
 import {GroupsComponent} from '../pages/groups/groups.component';
 import {CreateGroupComponent} from '../pages/create-group/create-group.component';
 import {EventsComponent} from '../pages/events/events.component';
-import {ResourcesComponent} from '../pages/resources/resources.component';
+import {AllResourcesPageComponent} from '../pages/all-resources-page/all-resources-page.component';
 import {JoinGroupComponent} from '../pages/join-group/join-group.component';
 import {GroupGlanceComponent} from '../pages/group-glance/group-glance.component';
 import {MembersComponent} from '../pages/members/members.component';
@@ -19,7 +19,7 @@ export const routes: Routes = [
   {path : 'groups/:groupId',component : GroupGlanceComponent},
   {path : 'create/group', component : CreateGroupComponent},
   {path : 'groups/:groupId/events', component : EventsComponent},
-  {path : 'groups/:groupId/resources', component : ResourcesComponent},
+  {path : 'groups/:groupId/resources', component : AllResourcesPageComponent},
   {path : 'join/group', component : JoinGroupComponent},
   {path : 'groups/:groupId/members', component : MembersComponent}
 

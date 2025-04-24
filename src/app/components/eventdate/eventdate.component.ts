@@ -79,8 +79,10 @@ export class EventdateComponent {
   handleAttachClick(date :string, event :string,signal :WritableSignal<ModalState>){
     this.eventContext = event
     this.resourceService.fetchResources(this.router.snapshot.paramMap.get('groupId') ?? 'MISSING GROUP ID')
-      .subscribe(res => {
-        this.resources = res.body ?? []
+      .then(promise => {
+        promise.subscribe(res => {
+          this.resources = res.body ?? []
+        })
       })
     this.attachModalSignal.set('shown')
   }
@@ -141,6 +143,7 @@ export class EventdateComponent {
       .then(res => {
         res.subscribe(response => {
           if(response.status == HttpStatusCode.Ok){
+            this.unsortedEvents.set(this.unsortedEvents().filter(val => val.eventId != this.eventIdContext))
             this.deleteSignal.set('hidden')
           }
           else{

@@ -13,6 +13,8 @@ import {fetchGroupId} from '../../../utils/fetchGroupId';
 import {HttpStatusCode} from '@angular/common/http';
 import { v4 as uuidv4 } from 'uuid';
 import {fetchSelfId} from '../../../utils/fetchSelfId';
+import {normalizeInputTime} from '../../../utils/normalizeInputTime';
+import {sortEventsFunction} from '../../../utils/sortEventsFunction';
 @Component({
   selector: 'app-events',
   imports: [
@@ -32,7 +34,16 @@ export class EventsComponent implements OnInit{
   events = signal<EventPanelDetails[]>([])
 
   eventsByDate = computed<Map<string,EventPanelDetails[]>>(() => {
-    return this.sortEvents()
+    const eventMap = new Map<string,EventPanelDetails[]>
+    for(const event of this.events()){
+      const eventDate = event.date
+      if(!eventMap.has(eventDate)){
+        eventMap.set(eventDate,[])
+      }
+      (eventMap.get(eventDate) as EventDetails[]).push(event)
+    }
+
+    return eventMap
   })
 
   addEventModal = signal<ModalState>('hidden')
@@ -49,19 +60,6 @@ export class EventsComponent implements OnInit{
       })
   }
 
-  private sortEvents(){
-    const eventMap = new Map<string,EventPanelDetails[]>
-    for(const event of this.events()){
-      const eventDate = event.date
-      if(!eventMap.has(eventDate)){
-        eventMap.set(eventDate,[])
-      }
-      (eventMap.get(eventDate) as EventDetails[]).push(event)
-    }
-
-    return eventMap
-  }
-
 
   addEventForm = new FormGroup({
     eventName : new FormControl<string>(''),
@@ -71,27 +69,27 @@ export class EventsComponent implements OnInit{
     description : new FormControl<string>('')
   })
 
-  onSubmit() {
+  onAddEventSubmit() {
     const groupId = fetchGroupId(this.route)
     this.eventService.createEvent(groupId, this.addEventForm.value)
       .then(promise => {
         promise.subscribe(response => {
           if(response.status == HttpStatusCode.Ok){
-              console.warn()
               this.events.set([
               ...this.events(),
               {
-                eventId : uuidv4(),
+                eventId : response.body ?? 'Fail when reading response body uuid in onAddEventSubmit()',
                 owner : fetchSelfId() as string,
                 description : this.addEventForm.value.description as string,
                 date : this.addEventForm.value.eventDate as string,
-                startTime : DateTime.fromFormat(this.addEventForm.value.startTime?.concat(':00') as string,'HH:mm:ss').toSQLTime()?.toString().substring(0,8) as string,
-                endTime : DateTime.fromFormat(this.addEventForm.value.endTime?.concat(':00') as string,'HH:mm:ss').toSQLTime()?.toString().substring(0,8) as string,
+                startTime : normalizeInputTime(this.addEventForm.value.startTime ?? 'NO TIME INPUT'),
+                endTime : normalizeInputTime(this.addEventForm.value.endTime ?? 'NO TIME INPUT'),
                 name : this.addEventForm.value.eventName as string,
                 hasWriteAccess : true,
                 reservedResources : []
               }
-            ])
+            ].sort(sortEventsFunction)
+              )
             this.addEventModal.set('hidden')
           }
         })

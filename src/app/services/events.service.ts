@@ -23,6 +23,8 @@ export class EventsService {
 
   static POST_EVENT_ENDPOINT = '/events/api/member/postevent?'
 
+  static CURR_USER_EVENTS_ENDPOINT = '/events/api/member/myevents?'
+
   http = inject(HttpClient)
 
   async fetchEventGlance(groupId :string){
@@ -62,12 +64,23 @@ export class EventsService {
   }
 
   async createEvent(groupId: string, value: any){
-    return this.http.post(
+    return this.http.post<string>(
       BASE_URL + EventsService.POST_EVENT_ENDPOINT,
       value,
       {
         withCredentials : true,
         headers : new HttpHeaders().set('Content-Type','application/json'),
+        params : new HttpParams().set('groupId',groupId),
+        observe : 'response'
+      }
+    )
+  }
+
+  async fetchCurrUserEvents(groupId :string){
+    return this.http.get<EventDetails[]>(
+      BASE_URL + EventsService.CURR_USER_EVENTS_ENDPOINT,
+      {
+        withCredentials : true,
         params : new HttpParams().set('groupId',groupId),
         observe : 'response'
       }

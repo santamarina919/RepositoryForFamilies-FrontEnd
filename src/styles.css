@@ -18,6 +18,9 @@
   --modal-overlay-color : #909090;
 
   --glance-start-width : 45vh;
+
+  --adverse-color : #FF1919;
+  --favorible-color : green
 }
 
 body {
@@ -37,6 +40,16 @@ button {
 button:hover {
   background-color: var(--opposite-background-color);
   color: var(--opposite-text-color);
+}
+
+.adverseButtonHover:hover {
+  background-color: var(--adverse-color);
+  color: white;
+}
+
+.favoribleButtonHover:hover {
+  background-color: var(--favorible-color);
+  color: white
 }
 
 h1,h2,h3,h4,h5,h6,p,label,td,th {

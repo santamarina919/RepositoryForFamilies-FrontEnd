@@ -1,0 +1,40 @@
+<div class="reservation">
+  @if (reservation().approved == null) {
+    @if (fetchSelfId() == resource().owner) {
+      <p>You can reject or approve this reservation</p>
+      <button (click)="handleApprove(reservation().resourceId,reservation().linkedEvent.eventId)" class="favoribleButtonHover">Approve</button>
+      <button (click)="handleRejectClick(reservation().resourceId,reservation().linkedEvent.eventId)" class="adverseButtonHover">Reject</button>
+    } @else {
+      <p>Status: not approved or rejected by resource owner</p>
+    }
+  }
+  @else if(reservation().approved){
+    <p>Status: Resource owner approves of reservation</p>
+  } @else {
+    <p>Status: Resource owner rejected this reservation</p>
+  }
+  <p>
+    {{ toPreferredDateFormatStr(reservation().linkedEvent.date) }} -
+    {{ createTimeDescription(reservation().linkedEvent.startTime,reservation().linkedEvent.endTime) }}
+  </p>
+
+  <p>Linked to "{{ reservation().linkedEvent.name }}"</p>
+
+
+  <p>Description: {{ reservation().linkedEvent.description }}</p>
+
+</div>
+
+
+<app-modal [(modalState)]="rejectModal">
+  <div class="rejectionModal" (click)="ModalComponent.handleContentClick($event)">
+    <form [formGroup]="rejectionForm" (ngSubmit)="handleRejection()">
+      <h3>Reject this reservation</h3>
+      <div>
+        <label>Reason:</label>
+        <input formControlName="reason" />
+      </div>
+      <input type="submit" />
+    </form>
+  </div>
+</app-modal>

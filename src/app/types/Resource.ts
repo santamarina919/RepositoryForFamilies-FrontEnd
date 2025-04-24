@@ -7,6 +7,4 @@ export type Resource = {
   description :string | null
   type :string
 
-  reservations : EventDetails[]
-
 }

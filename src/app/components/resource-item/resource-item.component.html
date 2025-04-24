@@ -1,0 +1,40 @@
+<div class="resource">
+  <button (click)="handleNewReservationClick()">Reserve</button>
+  <p>{{ resource().name }} owned by {{ fetchName(resource().owner) }}</p>
+
+  @if (resource().description != null) {
+    <p>Description: {{ resource().description }}</p>
+  }
+
+  @if (reservationMap().get(resource().resourceId) != undefined && reservationMap().get(resource().resourceId)?.length != 0) {
+    <h3>Reservations</h3>
+  }
+  @for (reservation of reservationMap().get(resource().resourceId); track reservation.linkedEvent.eventId) {
+    <app-reservation [resource]="resource()" [reservation]="reservation" [(resources)]="resources" [(reservations)]="reservations"></app-reservation>
+  }
+</div>
+
+<app-modal [(modalState)]="reserveSignal">
+  <div class='reserveModal' (click)="ModalComponent.handleContentClick($event)">
+    <form [formGroup]="reserveForm" (ngSubmit)="handleNewReservationSubmit()" >
+      <h1>Reserve {{fetchName(resource().owner)}}'s {{resource().name}}</h1>
+      <label>Use an existing event?</label>
+      <select formControlName="eventId">
+        @if (events() == null) {
+          <option selected disabled>Loading Event Data</option>
+        }
+        @else{
+          <option disabled selected value="{{EVENT_ID_INVALID_KEY}}">Chose an event</option>
+          @for (event of events(); track  event.eventId){
+            <option value="{{event.eventId}}">{{event.name}}</option>
+          }
+        }
+      </select>
+
+      <button type="submit">Reserve</button>
+      <button type="button" (click)="reserveSignal.set('hidden')">Cancel</button>
+    </form>
+
+  </div>
+</app-modal>
+

@@ -11,7 +11,7 @@
 <app-modal [(modalState)]="addEventModal" >
 
   <div class="addEventModal" (click)="handleNonBlurClick($event)">
-    <form class="addEventForm" [formGroup]="addEventForm" (ngSubmit)="onSubmit()">
+    <form class="addEventForm" [formGroup]="addEventForm" (ngSubmit)="onAddEventSubmit()">
       <h3>Add an event to your group</h3>
 
       <div>
