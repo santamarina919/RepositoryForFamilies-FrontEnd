@@ -1,1 +1,13 @@
-<p>kitchen-card works!</p>
+
+
+<div class="kitchenCardContainer" [routerLink]="'kitchen'">
+  @if (mealCount() == null) {
+    <h3>Fetching Count</h3>
+  }
+  @else {
+    <h3>Kitchen</h3>
+    <div class="cardContent">
+      <p>{{ mealCount() }} meal(s) available</p>
+    </div>
+  }
+</div>

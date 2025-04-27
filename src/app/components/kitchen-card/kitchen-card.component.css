@@ -1,0 +1,12 @@
+.kitchenCardContainer {
+  background-color: var(--primary-overlay-color);
+  padding : 10px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.cardContent {
+  background-color: var(--secondary-overlay-color);
+  padding : 5px;
+  border-radius: 10px;
+}

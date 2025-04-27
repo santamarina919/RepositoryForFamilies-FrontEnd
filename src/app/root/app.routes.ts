@@ -9,6 +9,7 @@ import {AllResourcesPageComponent} from '../pages/all-resources-page/all-resourc
 import {JoinGroupComponent} from '../pages/join-group/join-group.component';
 import {GroupGlanceComponent} from '../pages/group-glance/group-glance.component';
 import {MembersComponent} from '../pages/members/members.component';
+import {KitchenComponent} from '../pages/kitchen/kitchen.component';
 
 
 export const routes: Routes = [
@@ -21,6 +22,7 @@ export const routes: Routes = [
   {path : 'groups/:groupId/events', component : EventsComponent},
   {path : 'groups/:groupId/resources', component : AllResourcesPageComponent},
   {path : 'join/group', component : JoinGroupComponent},
-  {path : 'groups/:groupId/members', component : MembersComponent}
+  {path : 'groups/:groupId/members', component : MembersComponent},
+  {path : 'groups/:groupId/kitchen', component : KitchenComponent}
 
 ];
