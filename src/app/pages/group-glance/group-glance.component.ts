@@ -11,13 +11,15 @@ import {EventCardComponent} from '../../components/event-card/event-card.compone
 import {ResourcesCardComponent} from '../../components/resources-card/resources-card.component';
 import {UserType} from '../../types/UserType';
 import {UsersCardComponent} from '../../components/users-card/users-card.component';
+import {KitchenCardComponent} from '../../components/kitchen-card/kitchen-card.component';
 
 @Component({
   selector: 'app-group-home',
   imports: [
     EventCardComponent,
     ResourcesCardComponent,
-    UsersCardComponent
+    UsersCardComponent,
+    KitchenCardComponent
   ],
   templateUrl: './group-glance.component.html',
   styleUrl: './group-glance.component.css'

@@ -9,6 +9,7 @@
     <div class="cardContainer">
       <app-event-card [events]="eventGlances"></app-event-card>
       <app-resources-card [resources]="resources"></app-resources-card>
+      <app-kitchen-card></app-kitchen-card>
       @if (userType == 'ADMIN'){
         <app-users-card></app-users-card>
       }
