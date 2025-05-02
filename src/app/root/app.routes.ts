@@ -10,6 +10,8 @@ import {JoinGroupComponent} from '../pages/join-group/join-group.component';
 import {GroupGlanceComponent} from '../pages/group-glance/group-glance.component';
 import {MembersComponent} from '../pages/members/members.component';
 import {KitchenComponent} from '../pages/kitchen/kitchen.component';
+import {MealComponent} from '../pages/meal/meal.component';
+import {IngredientComponent} from '../pages/ingredient/ingredient.component';
 
 
 export const routes: Routes = [
@@ -23,6 +25,8 @@ export const routes: Routes = [
   {path : 'groups/:groupId/resources', component : AllResourcesPageComponent},
   {path : 'join/group', component : JoinGroupComponent},
   {path : 'groups/:groupId/members', component : MembersComponent},
-  {path : 'groups/:groupId/kitchen', component : KitchenComponent}
+  {path : 'groups/:groupId/kitchen', component : KitchenComponent},
+  {path : 'groups/:groupId/kitchen/meal/:mealId', component : MealComponent},
+  {path : 'groups/:groupId/kitchen/ingredient/:itemName', component : IngredientComponent}
 
 ];

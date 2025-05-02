@@ -1,0 +1,47 @@
+.typeToggle {
+  display: flex;
+  gap : 1rem
+}
+button {
+  border-radius: 0;
+  transition: none;
+}
+
+
+
+.mealStyle {
+  background-color: white;
+  color: black;
+  cursor: auto;
+}
+
+.notMealStyle:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
+
+.itemStyle {
+  background-color: white;
+  color: black;
+  cursor: auto;
+}
+
+.notItemStyle:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
+
+.mealDiv,.itemDiv {
+  border-style: solid;
+  border-color: white;
+  width: fit-content;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.listHolder {
+  display: flex;
+  margin: 20px;
+}

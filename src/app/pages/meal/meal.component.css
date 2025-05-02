@@ -1,0 +1,21 @@
+.directionBlock {
+  border-style: solid;
+  border-color: white;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 25px;
+  width: fit-content;
+}
+
+.ingredientsHolder {
+  display: flex;
+}
+
+.ingredientBlock {
+  border-style: solid;
+  border-color: white;
+  padding: 5px;
+  margin: 10px;
+  border-radius: 25px;
+  width: fit-content;
+}

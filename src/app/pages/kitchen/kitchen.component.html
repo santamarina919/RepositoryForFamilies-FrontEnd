@@ -1,1 +1,40 @@
-<p>kitchen works!</p>
+
+<div class="typeToggle">
+  <button (click)="typeFlag.set('meal')" class="{{mealStyle()}}">Meals</button> <button (click)="typeFlag.set('item')" class="{{itemStyle()}}">Ingredients</button>
+</div>
+
+<div>
+  @if (typeFlag() == 'meal') {
+    @if (meals() == null) {
+      <p>Fetching meals</p>
+    } @else {
+      <div class="listHolder">
+        @for (meal of meals(); track meal.mealName) {
+          <div class="mealDiv" [routerLink]="['meal',encodeURIComponent(meal.mealName)]">
+            <p>{{ meal.mealName }}</p>
+          </div>
+        } @empty {
+          <p>No meals created for this group</p>
+        }
+      </div>
+    }
+
+  } @else if (typeFlag() == 'item' && ingredients() != null){
+    @if (ingredients() == null) {
+      <p>Fetching ingredients</p>
+    }
+    @else {
+      <div class="listHolder">
+        @for (ingredient of ingredients(); track ingredient.name) {
+        <div class="itemDiv" [routerLink]="['ingredient',encodeURIComponent(ingredient.name)]">
+          <p>{{ ingredient.name }}</p>
+        </div>
+        } @empty {
+          <p>No ingredients added to this group</p>
+        }
+      </div>
+    }
+  }
+</div>
+
+<router-outlet></router-outlet>

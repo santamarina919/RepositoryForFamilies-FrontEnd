@@ -1,0 +1,26 @@
+@if (meal() == null) {
+
+} @else{
+  <h1>{{meal()?.mealName}}</h1>
+
+  <h3>Ingredients</h3>
+  <div class="ingredientsHolder">
+  @for (ingredient of meal()?.ingredients; track ingredient.name) {
+    <div class="ingredientBlock">
+      <p>{{ ingredient.name }}</p>
+    </div>
+  }
+  </div>
+
+
+  <h3>Directions</h3>
+  @for (direction of meal()?.directions; track direction.step){
+    <div class="directionBlock">
+      @if (direction.optional) {
+      <p>(Optional)</p>
+      }
+      <p>Step {{ direction.step }}) {{ direction.direction }}</p>
+    </div>
+  }
+
+}
